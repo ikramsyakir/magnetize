@@ -1,4 +1,4 @@
-<p align="center"><img src="https://magnetize.test/images/magnetize-logo.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/ikramsyakir/magnetize-web/main/public/images/magnetize-logo.png" width="400"></p>
 
 # Magnetize
 

@@ -1,0 +1,8 @@
+table thead th a {
+    color: #656d77;
+}
+
+table thead th a, a:hover {
+    text-decoration: none;
+    color: #656d77;
+}

@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravolt\Avatar\Avatar;
 
 class RegisterController extends Controller
 {
@@ -86,6 +87,12 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         $user->assignRole('normal-user');
+
+        $path = 'uploads/avatars/' . uniqid() . '-' . now()->timestamp . '.png';
+        $avatar = new Avatar(config('laravolt.avatar'));
+        $avatar->create($user->name)->save($path, 100);
+        $user->avatar = $path;
+        $user->save();
     }
 
 }

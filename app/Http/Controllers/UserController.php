@@ -14,9 +14,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Laravolt\Avatar\Avatar;
 use Throwable;
 
 class UserController extends Controller
@@ -79,7 +80,14 @@ class UserController extends Controller
             $user->assignRole($validated['roles']);
         }
 
-        $path = $request->hasFile('avatar') ? $request->file('avatar')->store('uploads/avatars') : null;
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('uploads/avatars');
+        } else {
+            $path = 'uploads/avatars/' . uniqid() . '-' . now()->timestamp . '.png';
+            $avatar = new Avatar(config('laravolt.avatar'));
+            $avatar->create($user->name)->save($path, 100);
+        }
+
         $user->avatar = $path;
 
         $user->save();
@@ -158,8 +166,11 @@ class UserController extends Controller
             $user->email = $validated['email'];
         }
 
-        $path = $request->hasFile('avatar') ? $request->file('avatar')->store('uploads/avatars') : null;
-        $user->avatar = $path ?? $user->avatar;
+        if ($request->hasFile('avatar')) {
+            Storage::delete($user->avatar);
+            $path = $request->file('avatar')->store('uploads/avatars');
+            $user->avatar = $path;
+        }
 
         if (isset($validated['roles']) && $validated['roles']) {
             $user->syncRoles($validated['roles']);
@@ -182,6 +193,7 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->delete();
+            Storage::delete($user->avatar);
 
             $response = [
                 'success' => true,

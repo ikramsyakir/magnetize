@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
 
-    Route::put('me/update', [UserController::class, 'update'])->name('user.update');
+    Route::put('me/update/{id}', [UserController::class, 'update'])->name('user.update');
 
     Route::apiResource('posts', PostController::class)->except(['create', 'edit'])->names([
         'index' => 'api.posts.index',

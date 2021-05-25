@@ -12,9 +12,11 @@ class UserController extends Controller
 {
     use ApiResponse;
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $user = User::findOrFail(auth()->user()->id);
+        return $request->all();
+
+        $user = User::findOrFail($id);
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -34,8 +36,11 @@ class UserController extends Controller
             $user->email = $validated['email'];
         }
 
-        $path = $request->hasFile('avatar') ? $request->file('avatar')->store('uploads/avatars') : null;
-        $user->avatar = $path ?? $user->avatar;
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('uploads/avatars');
+            $user->avatar = $path;
+        }
+
         $user->update();
 
         return $this->success([

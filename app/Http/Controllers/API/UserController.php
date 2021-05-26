@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\UserChangedEmail;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,8 +15,6 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $request->all();
-
         $user = User::findOrFail($id);
 
         $validated = $request->validate([
@@ -37,6 +36,7 @@ class UserController extends Controller
         }
 
         if ($request->hasFile('avatar')) {
+            Storage::delete($user->avatar);
             $path = $request->file('avatar')->store('uploads/avatars');
             $user->avatar = $path;
         }

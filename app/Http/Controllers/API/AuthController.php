@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravolt\Avatar\Avatar;
 
 class AuthController extends Controller
 {
@@ -59,6 +60,13 @@ class AuthController extends Controller
         ]);
 
         $user->assignRole('normal-user');
+
+        $path = 'uploads/avatars/' . uniqid() . '-' . now()->timestamp . '.png';
+        $avatar = new Avatar(config('laravolt.avatar'));
+        $avatar->create($user->name)->save($path, 100);
+        $user->avatar = $path;
+        $user->save();
+
         $user->sendEmailVerificationNotification();
 
         return $this->success([

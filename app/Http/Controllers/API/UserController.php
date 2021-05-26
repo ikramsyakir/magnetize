@@ -43,8 +43,19 @@ class UserController extends Controller
 
         $user->update();
 
+        $data = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'username' => $user->username,
+            'email' => $user->email,
+            'avatar' => asset($user->avatar),
+            'email_verified_at' => $user->email_verified_at,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+        ];
+
         return $this->success([
-            'user' => $user
+            'user' => $data
         ], 'User updated!');
     }
 }

@@ -74,10 +74,15 @@ class AuthController extends Controller
         ], 'User created!');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        $attr = $request->validate([
+            'id' => 'required|integer',
+        ]);
+
         // Get user who requested the logout
-        $user = request()->user(); //or Auth::user()
+        $user = User::findOrFail($attr['id']);
+
         // Revoke current user token
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
 

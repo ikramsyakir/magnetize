@@ -28,7 +28,7 @@ class CreatePost extends FormRequest
             'body' => ['required'],
             'status' => ['required'],
             'featured' => ['nullable'],
-            'avatar' => ['nullable', 'mimes:jpg,jpeg,png']
+            'image' => ['nullable', 'mimes:jpg,jpeg,png']
         ];
     }
 }

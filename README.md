@@ -8,7 +8,7 @@ Magnetize is a web application built with modern technologies such as Laravel, B
 
 The following tools are required in order to start the installation.
 
-* PHP 7.3 or higher
+* PHP 8.2 or higher
 * Database (eg: MySQL, MariaDB)
 * Web Server (eg: Nginx, Apache)
 * Local Development (Valet for Mac or Laragon for Windows)

@@ -1,1 +1,7 @@
-require('./bootstrap');
+import '@tabler/core/dist/js/tabler.min.js';
+
+import './bootstrap';
+
+// jQuery
+import $ from "jquery";
+window.$ = $;

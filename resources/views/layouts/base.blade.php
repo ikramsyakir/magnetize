@@ -10,16 +10,7 @@
 
     <title>@yield('title') | {{ config('app.name') }}</title>
 
-    <!-- CSS files -->
-    <link href="{{ asset('vendor/tabler/dist/css/tabler.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-flags.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-payments.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/demo.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/icons/tabler-icons.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    @include('layouts.partials._font-awesome')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @include('layouts.partials._favicons')
 
@@ -30,10 +21,10 @@
     @yield('content')
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    @include('sweetalert::alert')
-    <!-- Tabler Core -->
-    <script src="{{ asset('vendor/tabler/dist/js/tabler.min.js') }}"></script>
+    <script>
+        window.Laravel = {csrfToken: '{{ csrf_token() }}'}
+    </script>
+
     @stack('scripts')
 </body>
 </html>

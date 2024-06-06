@@ -12,16 +12,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- CSS files -->
-    <link href="{{ asset('vendor/tabler/dist/css/tabler.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-flags.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-payments.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/dist/css/demo.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('vendor/tabler/icons/tabler-icons.css') }}" rel="stylesheet"/>
-
-    @include('layouts.partials._font-awesome')
-
     @include('layouts.partials._favicons')
 
     @stack('styles')
@@ -34,8 +24,6 @@
     <script>
         window.Laravel = {csrfToken: '{{ csrf_token() }}'}
     </script>
-
-    @include('sweetalert::alert')
 
     @stack('scripts')
 </body>

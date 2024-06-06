@@ -1,8 +1,5 @@
-table thead th a {
-    color: #656d77;
-}
-
-table thead th a, a:hover {
-    text-decoration: none;
-    color: #656d77;
-}
+@import "@tabler/core";
+@import "@tabler/icons/iconfont/tabler-icons.css";
+@import "summernote/dist/summernote.min.css";
+@import "@fortawesome/fontawesome-free/css/all.css";
+@import "custom.css";

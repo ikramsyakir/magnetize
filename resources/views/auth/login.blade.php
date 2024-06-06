@@ -3,7 +3,7 @@
 @section('title', 'Login')
 
 @section('main-content')
-    <div class="container-tight py-4">
+    <div id="app" class="container-tight py-4">
         <div class="text-center mb-4">
             <a href="{{ url('/') }}"><img src="{{ asset('images/magnetize-logo.png') }}" height="60" alt=""></a>
         </div>
@@ -79,26 +79,27 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(function(){
-            $("#show_hide_password a").on('click', function(event) {
+    @vite('resources/js/views/auth/login.js')
+{{--    <script type="module">--}}
+{{--        $(function(){--}}
+{{--            $("#show_hide_password a").on('click', function(event) {--}}
 
-                event.preventDefault();
+{{--                event.preventDefault();--}}
 
-                let input = '#show_hide_password input';
-                let icon = '#show_hide_password i';
+{{--                let input = '#show_hide_password input';--}}
+{{--                let icon = '#show_hide_password i';--}}
 
-                if ($(input).attr("type") === "text"){
-                    $(input).attr('type', 'password');
-                    $(icon).addClass( "fa-eye-slash" );
-                    $(icon).removeClass( "fa-eye" );
-                } else if($(input).attr("type") === "password"){
-                    $(input).attr('type', 'text');
-                    $(icon).removeClass( "fa-eye-slash" );
-                    $(icon).addClass( "fa-eye" );
-                }
+{{--                if ($(input).attr("type") === "text"){--}}
+{{--                    $(input).attr('type', 'password');--}}
+{{--                    $(icon).addClass( "fa-eye-slash" );--}}
+{{--                    $(icon).removeClass( "fa-eye" );--}}
+{{--                } else if($(input).attr("type") === "password"){--}}
+{{--                    $(input).attr('type', 'text');--}}
+{{--                    $(icon).removeClass( "fa-eye-slash" );--}}
+{{--                    $(icon).addClass( "fa-eye" );--}}
+{{--                }--}}
 
-            });
-        });
-    </script>
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
 @endpush

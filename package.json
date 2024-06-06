@@ -23,6 +23,7 @@
         "axios": "^1.7.2",
         "jquery": "^3.7.1",
         "summernote": "^0.8.18",
-        "sweetalert2": "^11.11.1"
+        "sweetalert2": "^11.11.1",
+        "vue": "^3.4.27"
     }
 }

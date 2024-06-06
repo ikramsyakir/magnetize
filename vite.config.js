@@ -7,6 +7,7 @@ export default defineConfig({
         laravel([
             'resources/css/app.css',
             'resources/js/app.js',
+            'resources/js/views/auth/login.js',
         ]),
         vue({
             template: {
@@ -20,6 +21,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': '/resources/js',
+            'vue': 'vue/dist/vue.esm-bundler.js'
         }
     }
 });

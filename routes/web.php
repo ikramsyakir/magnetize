@@ -23,9 +23,9 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Auth::routes(['verify' => true]);
+require __DIR__.'/auth.php';
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

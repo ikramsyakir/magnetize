@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ config('app.name') }}</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -24,6 +24,9 @@
     <script>
         window.Laravel = {csrfToken: '{{ csrf_token() }}'}
     </script>
+
+    <!-- Global route to JS -->
+    @routes
 
     @stack('scripts')
 </body>

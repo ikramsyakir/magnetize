@@ -1,3 +1,9 @@
+[x-cloak] { display: none !important; }
+
+[v-cloak] {
+    display: none;
+}
+
 table thead th a {
     color: #656d77;
 }

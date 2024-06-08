@@ -1,4 +1,5 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue';
+import {route} from 'ziggy-js';
 
 createApp({
     name: "LoginForm",
@@ -22,7 +23,7 @@ createApp({
                 'fa-eye-slash': !this.show_password,
                 'fa-eye': this.show_password,
             }
-        }
+        },
     },
     methods: {
         togglePassword: function () {

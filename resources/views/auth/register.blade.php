@@ -1,74 +1,76 @@
 @extends('layouts.auth.app')
 
-@section('title', 'Register')
+@section('title', __('messages.register'))
 
 @section('main-content')
-    <div class="container-tight py-4">
+    <div id="app" v-cloak class="container container-tight py-4">
         <div class="text-center mb-4">
-            <a href="{{ url('/') }}"><img src="{{ asset('images/magnetize-logo.png') }}" height="60" alt=""></a>
+            <a href="{{ url('/') }}"><img src="{{ asset('images/magnetize-logo.png') }}" height="60" alt="logo"></a>
         </div>
-        <form class="card card-md" action="{{ route('register') }}" method="POST" autocomplete="off">
-            @csrf
-
+        <form class="card card-md" autocomplete="off">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Create new account</h2>
+                <h2 class="card-title text-center mb-4">{{ __('messages.create_new_account') }}</h2>
+
                 <div class="mb-3">
-                    <label class="form-label required">Name</label>
-
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="John Doe" required autocomplete="name" autofocus>
-
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    <label for="email" class="form-label required">{{ __('messages.name') }}</label>
+                    <input type="text" id="name" name="name" v-model="name" class="form-control"
+                           :class="{ 'is-invalid': errors.name }">
+                    <div class="invalid-feedback" v-if="errors.name">@{{ errors.name[0] }}</div>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label required">Username</label>
-
-                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="johndoe" required autocomplete="username">
-
-                    @error('username')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    <label for="email" class="form-label required">{{ __('messages.email') }}</label>
+                    <input type="email" id="email" name="email" v-model="email" class="form-control"
+                           :class="{ 'is-invalid': errors.email }">
+                    <div class="invalid-feedback" v-if="errors.email">@{{ errors.email[0] }}</div>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label required">Email address</label>
-
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="johndoe@email.com" required autocomplete="email">
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
+                    <label class="form-label required">{{ __('messages.password') }}</label>
+                    <div class="input-group input-group-flat">
+                        <input id="password" :type="passwordType" v-model="password" class="form-control"
+                               :class="{ 'is-invalid': errors.password }">
+                        <span class="input-group-text" :class="{ 'border-red': errors.password }">
+                            <a class="link-secondary" @click="togglePassword"><i :class="passwordClass"></i></a>
+                        </span>
+                    </div>
+                    <div class="invalid-feedback d-block" v-if="errors.password">@{{ errors.password[0] }}</div>
                 </div>
+
                 <div class="mb-3">
-                    <label class="form-label required">Password</label>
-
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Must have at least 8 characters" required autocomplete="current-password">
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label class="form-label required">Confirm Password</label>
-
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+                    <label class="form-label required">{{ __('messages.confirm_password') }}</label>
+                    <div class="input-group input-group-flat">
+                        <input id="password_confirmation" :type="passwordConfirmationType"
+                               v-model="password_confirmation" class="form-control"
+                               :class="{ 'is-invalid': errors.password_confirmation }">
+                        <span class="input-group-text" :class="{ 'border-red': errors.password_confirmation }">
+                            <a class="link-secondary" @click="togglePasswordConfirmation">
+                                <i :class="passwordConfirmationClass"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="invalid-feedback d-block" v-if="errors.password_confirmation">
+                        @{{ errors.password_confirmation[0] }}
+                    </div>
                 </div>
 
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary w-100">Sign up</button>
+                    <button type="button" class="btn btn-primary w-100" :disabled="loading" @click.prevent="submitForm">
+                        <span class="spinner-border spinner-border-sm border-2 me-2" role="status"
+                              aria-hidden="true" v-if="loading"></span>
+                        <span>{{ __('messages.register') }}</span>
+                    </button>
                 </div>
             </div>
         </form>
+
         <div class="text-center text-muted mt-3">
-            Already have account? <a href="{{ route('login') }}" tabindex="-1">Sign in</a>
+            {{ __('messages.already_have_account') }}
+            <a href="{{ route('login') }}" class="btn-link">{{ __('messages.login') }}</a>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/views/auth/register.js')
+@endpush

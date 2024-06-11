@@ -36,7 +36,7 @@ class RolePermissionSeeder extends Seeder
                 'Update Post',
                 'Delete Post',
             ],
-            'normal-user' => [
+            'user' => [
                 'User Profile',
                 'Update User',
                 'Create Post',

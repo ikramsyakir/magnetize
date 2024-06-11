@@ -22,7 +22,9 @@
                     <label class="form-label required">
                         {{ __('messages.password') }}
                         <span class="form-label-description">
-                            <a href="{{ route('password.request') }}">{{ __('messages.forgot_your_password') }}</a>
+                            <a href="{{ route('password.request') }}" class="btn-link">
+                                {{ __('messages.forgot_your_password') }}
+                            </a>
                         </span>
                     </label>
                     <div class="input-group input-group-flat">
@@ -56,7 +58,7 @@
 
         <div class="text-center text-muted mt-3">
             <span class="me-1">{{ __('messages.dont_have_account_yet') }}</span>
-            <a href="{{ route('register') }}">{{ __('messages.register') }}</a>
+            <a href="{{ route('register') }}" class="btn-link">{{ __('messages.register') }}</a>
         </div>
     </div>
 @endsection

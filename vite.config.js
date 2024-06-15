@@ -10,6 +10,8 @@ export default defineConfig({
             'resources/js/app.js',
             'resources/js/views/auth/login.js',
             'resources/js/views/auth/register.js',
+            'resources/js/views/auth/forgot-password.js',
+            'resources/js/views/auth/reset-password.js',
         ]),
         vue({
             template: {

@@ -1,42 +1,49 @@
 @extends('layouts.auth.app')
 
-@section('title', 'Forgot Password')
+@section('title', __('messages.forgot_password'))
 
 @section('main-content')
-    <div class="page page-center">
-        <div class="container-tight py-4">
-            <div class="text-center mb-4">
-                <a href="{{ url('/') }}"><img src="{{ asset('images/magnetize-logo.png') }}" height="60" alt=""></a>
-            </div>
-            <form class="card card-md" action="{{ route('password.email') }}" method="POST">
-                @csrf
-
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Forgot password</h2>
-                    <p class="text-muted mb-4">Enter your email address and your will be received link to reset your password.</p>
-                    <div class="mb-3">
-                        <label class="form-label">Email address</label>
-
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="johndoe@email.com" required autocomplete="email" autofocus>
-
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-footer">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/mail -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="5" width="18" height="14" rx="2" /><polyline points="3 7 12 13 21 7" /></svg>
-                            Send me new password
-                        </button>
-                    </div>
+    <div id="app" v-cloak class="container container-tight py-4">
+        <div class="text-center mb-4">
+            <a href="{{ url('/') }}"><img src="{{ asset('images/magnetize-logo.png') }}" height="60" alt="logo"></a>
+        </div>
+        <form class="card card-md" autocomplete="off" @submit.prevent="submitForm">
+            <div class="card-body">
+                <div class="alert alert-important bg-green-lt text-center mb-4" role="alert" v-if="reset_link_sent">
+                    @{{ reset_link_sent }}
                 </div>
-            </form>
-            <div class="text-center text-muted mt-3">
-                Forget it, <a href="{{ route('login') }}">send me back</a> to the sign in screen.
+
+                <h2 class="card-title text-center mb-4">{{ __('messages.reset_password') }}</h2>
+
+                <p class="text-muted mb-4">
+                    {{ __('messages.forgot_your_password_no_problem_just_let_us_know_your_email_address_and_we_will_email_you_a_password_reset_link_that_will_allow_you_to_choose_a_new_one') }}
+                </p>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label required">{{ __('messages.email') }}</label>
+                    <input type="email" id="email" name="email" v-model="email" class="form-control"
+                           :class="{ 'is-invalid': errors.email }">
+                    <div class="invalid-feedback" v-if="errors.email">@{{ errors.email[0] }}</div>
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary w-100" :disabled="loading">
+                        <span class="spinner-border spinner-border-sm border-2 me-2" role="status"
+                              aria-hidden="true" v-if="loading"></span>
+                        <i class="fa fa-envelope me-2"></i>
+                        <span>{{ __('messages.send_password_reset_link') }}</span>
+                    </button>
+                </div>
             </div>
+        </form>
+        <div class="text-center text-muted mt-3">
+            {{ __('messages.forget_it') }},
+            <a href="{{ route('login') }}" class="btn-link">{{ __('messages.send_me_back') }}</a>
+            {{ __('messages.to_the_login_screen') }}
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/views/auth/forgot-password.js')
+@endpush

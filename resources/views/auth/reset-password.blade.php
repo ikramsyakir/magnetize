@@ -1,6 +1,6 @@
 @extends('layouts.auth.app')
 
-@section('title', __('messages.login'))
+@section('title', 'Reset Password')
 
 @section('main-content')
     <div id="app" v-cloak class="container container-tight py-4">
@@ -9,7 +9,7 @@
         </div>
         <form class="card card-md" autocomplete="off" @submit.prevent="submitForm">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">{{ __('messages.login_to_your_account') }}</h2>
+                <h2 class="card-title text-center mb-4">{{ __('messages.reset_password') }}</h2>
 
                 <div class="mb-3">
                     <label for="email" class="form-label required">{{ __('messages.email') }}</label>
@@ -19,50 +19,50 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label required">
-                        {{ __('messages.password') }}
-                        <span class="form-label-description">
-                            <a href="{{ route('password.request') }}" class="btn-link">
-                                {{ __('messages.forgot_your_password') }}
-                            </a>
-                        </span>
-                    </label>
+                    <label class="form-label required">{{ __('messages.password') }}</label>
                     <div class="input-group input-group-flat">
                         <input id="password" :type="passwordType" v-model="password" class="form-control"
-                               :class="{ 'is-invalid': errors.password }" autocomplete="current-password">
+                               :class="{ 'is-invalid': errors.password }">
                         <span class="input-group-text" :class="{ 'border-red': errors.password }">
-                            <a class="link-secondary" @click="togglePassword">
-                                <i :class="passwordClass"></i>
-                            </a>
+                            <a class="link-secondary" @click="togglePassword"><i :class="passwordClass"></i></a>
                         </span>
                     </div>
                     <div class="invalid-feedback d-block" v-if="errors.password">@{{ errors.password[0] }}</div>
                 </div>
 
-                <div class="mb-2">
-                    <label class="form-check">
-                        <input type="checkbox" id="remember" v-model="remember" class="form-check-input">
-                        <span class="form-check-label">{{ __('messages.remember_me') }}</span>
-                    </label>
+                <div class="mb-3">
+                    <label class="form-label required">{{ __('messages.password_confirmation') }}</label>
+                    <div class="input-group input-group-flat">
+                        <input id="password_confirmation" :type="passwordConfirmationType"
+                               v-model="password_confirmation" class="form-control"
+                               :class="{ 'is-invalid': errors.password_confirmation }">
+                        <span class="input-group-text" :class="{ 'border-red': errors.password_confirmation }">
+                            <a class="link-secondary" @click="togglePasswordConfirmation">
+                                <i :class="passwordConfirmationClass"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="invalid-feedback d-block" v-if="errors.password_confirmation">
+                        @{{ errors.password_confirmation[0] }}
+                    </div>
                 </div>
 
                 <div class="form-footer">
                     <button type="submit" class="btn btn-primary w-100" :disabled="loading">
                         <span class="spinner-border spinner-border-sm border-2 me-2" role="status"
                               aria-hidden="true" v-if="loading"></span>
-                        <span>{{ __('messages.login') }}</span>
+                        <span>{{ __('messages.reset_password') }}</span>
                     </button>
                 </div>
             </div>
         </form>
-
-        <div class="text-center text-muted mt-3">
-            <span class="me-1">{{ __('messages.dont_have_account_yet') }}</span>
-            <a href="{{ route('register') }}" class="btn-link">{{ __('messages.register') }}</a>
-        </div>
     </div>
 @endsection
 
 @push('scripts')
-    @vite('resources/js/views/auth/login.js')
+    <script>
+        let token = '{{ $request->route('token') }}';
+        let email = '{{ $request->email }}';
+    </script>
+    @vite('resources/js/views/auth/reset-password.js')
 @endpush

@@ -21,4 +21,9 @@ return [
     'send_password_reset_link' => 'Send password reset link',
     'success' => 'Success',
     'to_the_login_screen' => 'to the login screen.',
+    'oops' => 'Oops...',
+    'page_expired_try_again' => 'Page expired. Try again.',
+    'verification_email' => 'Verification Email',
+    'your_email_is_already_verified' => 'Your email is already verified',
+    'your_email_has_been_successfully_verified' => 'Your email has been successfully verified',
 ];

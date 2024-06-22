@@ -22,11 +22,17 @@
 
     <!-- Scripts -->
     <script>
-        window.Laravel = {csrfToken: '{{ csrf_token() }}'}
+        window.Laravel = {csrfToken: '{{ csrf_token() }}'};
+        window.messages = {
+            'oops': '{{ __('messages.oops') }}',
+            'page_expired_try_again': '{{ __('messages.page_expired_try_again') }}',
+        };
     </script>
 
     <!-- Global route to JS -->
     @routes
+
+    @include('sweetalert::alert')
 
     @stack('scripts')
 </body>

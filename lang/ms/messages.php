@@ -21,4 +21,9 @@ return [
     'send_password_reset_link' => 'Hantar Pautan Tetap Semula Kata Laluan',
     'success' => 'Berjaya',
     'to_the_login_screen' => 'ke halaman log masuk.',
+    'oops' => 'Oops...',
+    'page_expired_try_again' => 'Halaman tamat tempoh. Cuba lagi.',
+    'verification_email' => 'Pengesahan E-mel',
+    'your_email_is_already_verified' => 'E-mel anda telah disahkan',
+    'your_email_has_been_successfully_verified' => 'E-mel anda telah berjaya disahkan',
 ];

@@ -1,6 +1,6 @@
 @extends('layouts.auth.app')
 
-@section('title', 'Reset Password')
+@section('title', __('messages.reset_password'))
 
 @section('main-content')
     <div id="app" v-cloak class="container container-tight py-4">

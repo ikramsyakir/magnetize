@@ -26,4 +26,6 @@ return [
     'verification_email' => 'Pengesahan E-mel',
     'your_email_is_already_verified' => 'E-mel anda telah disahkan',
     'your_email_has_been_successfully_verified' => 'E-mel anda telah berjaya disahkan',
+    'confirm_password' => 'Sahkan Kata Laluan',
+    'confirm' => 'Mengesahkan',
 ];

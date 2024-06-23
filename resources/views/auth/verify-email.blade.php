@@ -27,12 +27,6 @@
                                         {{ __('Resend Verification Email') }}
                                     </button>
                                 </form>
-
-                                <form class="ms-auto" method="POST" action="{{ route('logout') }}">
-                                    @csrf
-
-                                    <button type="submit" class="btn btn-link">{{ __('Log Out') }}</button>
-                                </form>
                             </div>
                         </div>
                     </div>

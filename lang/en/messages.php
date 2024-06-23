@@ -26,4 +26,6 @@ return [
     'verification_email' => 'Verification Email',
     'your_email_is_already_verified' => 'Your email is already verified',
     'your_email_has_been_successfully_verified' => 'Your email has been successfully verified',
+    'confirm_password' => 'Confirm Password',
+    'confirm' => 'Confirm',
 ];

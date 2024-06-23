@@ -28,7 +28,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Roles
     Route::resource('roles', RoleController::class)->except('show');

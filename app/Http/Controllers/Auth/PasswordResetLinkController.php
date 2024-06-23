@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class PasswordResetLinkController extends Controller
@@ -15,6 +16,9 @@ class PasswordResetLinkController extends Controller
         return view('auth.forgot-password');
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function store(ForgotPasswordRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -30,11 +34,6 @@ class PasswordResetLinkController extends Controller
             return response()->json(['status' => __($status)]);
         }
 
-        return response()->json([
-            'message' => __($status),
-            'errors' => [
-                'email' => [__($status)]
-            ]
-        ], 422);
+        return response()->json(throw ValidationException::withMessages(['email' => __($status)]), 422);
     }
 }

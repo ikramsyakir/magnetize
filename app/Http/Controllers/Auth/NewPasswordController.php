@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class NewPasswordController extends Controller
@@ -19,6 +20,9 @@ class NewPasswordController extends Controller
         return view('auth.reset-password', ['request' => $request]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function store(ResetPasswordRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -51,11 +55,6 @@ class NewPasswordController extends Controller
             ]);
         }
 
-        return response()->json([
-            'message' => __($status),
-            'errors' => [
-                'email' => [__($status)]
-            ]
-        ], 422);
+        return response()->json(throw ValidationException::withMessages(['email' => __($status)]), 422);
     }
 }

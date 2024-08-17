@@ -17,7 +17,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @include('layouts.partials._favicons')
+    @include('layouts.partials.favicons')
 
     @stack('styles')
 </head>

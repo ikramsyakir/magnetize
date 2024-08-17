@@ -19,7 +19,7 @@
                 </a>
             </div>
 
-            @include('layouts/partials/_notification')
+            @include('layouts/partials/notification')
 
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"

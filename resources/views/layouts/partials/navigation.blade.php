@@ -42,7 +42,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="fas fa-tachometer-alt"></i>
+                            <i class="ti ti-dashboard fs-2"></i>
                         </span>
                         <span class="nav-link-title">
                             {{ __('messages.dashboard') }}
@@ -53,7 +53,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('users.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="fas fa-users"></i>
+                            <i class="ti ti-users fs-2"></i>
                         </span>
                             <span class="nav-link-title">
                             {{ __('messages.users') }}
@@ -65,7 +65,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('roles.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="fas fa-users-cog"></i>
+                            <i class="ti ti-user-cog fs-2"></i>
                         </span>
                             <span class="nav-link-title">
                             {{ __('messages.roles') }}
@@ -77,7 +77,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('permissions.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="ti ti-user-shield fs-2"></i>
                         </span>
                             <span class="nav-link-title">
                             {{ __('messages.permissions') }}
@@ -89,7 +89,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('posts.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <i class="fas fa-newspaper"></i>
+                            <i class="ti ti-news fs-2"></i>
                         </span>
                             <span class="nav-link-title">
                             {{ __('messages.posts') }}

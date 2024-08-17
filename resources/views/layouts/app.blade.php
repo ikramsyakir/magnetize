@@ -3,13 +3,13 @@
 @section('content')
     <div class="page">
 
-        @include('layouts.partials._navigation')
+        @include('layouts.partials.navigation')
 
-        @include('layouts.partials._header')
+        @include('layouts.partials.header')
 
         <div class="page-wrapper">
-            @include('layouts.partials._content')
-            @include('layouts.partials._footer')
+            @include('layouts.partials.content')
+            @include('layouts.partials.footer')
         </div>
 
     </div>

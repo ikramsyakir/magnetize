@@ -1,3 +1,8 @@
+@php
+    use App\Utilities\Localization;
+    use Illuminate\Support\Js;
+@endphp
+
 <!doctype html>
 <html lang="{{ App::getLocale() }}">
 <head>
@@ -16,25 +21,22 @@
 
     @stack('styles')
 </head>
-<body class="{{ $body }}">
+<body class="{{ $body }}" data-bs-theme="{{ auth()->user()->theme }}">
 
-    @yield('content')
+@yield('content')
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {csrfToken: '{{ csrf_token() }}'};
-        window.messages = {
-            'oops': '{{ __('messages.oops') }}',
-            'page_expired_try_again': '{{ __('messages.page_expired_try_again') }}',
-        };
-    </script>
+<!-- Scripts -->
+<script>
+    window.Laravel = {csrfToken: '{{ csrf_token() }}'};
+    window.messages = {{ Js::from(Localization::get()) }};
+</script>
 
-    <!-- Global route to JS -->
-    @routes
+<!-- Global route to JS -->
+@routes
 
-    @include('sweetalert::alert')
+@include('sweetalert::alert')
 
-    @stack('scripts')
+@stack('scripts')
 </body>
 </html>
 

@@ -6,4 +6,5 @@ import './bootstrap';
 
 // jQuery
 import $ from "jquery";
+
 window.$ = $;

@@ -9,6 +9,34 @@
                      alt="{{ config('app.name') }}" class="navbar-brand-image">
             </a>
         </h1>
+        <div class="navbar-nav flex-row d-lg-none">
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                   aria-label="Open user menu">
+                    <span class="avatar avatar-sm"
+                          style="background-image: url({{ auth()->user()->avatar ? asset(auth()->user()->avatar) : Avatar::create(auth()->user()->name)->toBase64() }})"></span>
+                    <div class="d-none d-xl-block ps-2">
+                        <div>{{ Auth::user()->name }}</div>
+                        <div class="mt-1 small text-muted">{{ Auth::user()->email }}</div>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    @can('user-profile')
+                        <a href="{{ route('users.show', auth()->user()->id) }}" class="dropdown-item">
+                            {{ __('messages.profile') }}
+                        </a>
+                    @endcan
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav pt-lg-3">
                 <li class="nav-item">
@@ -17,7 +45,7 @@
                             <i class="fas fa-tachometer-alt"></i>
                         </span>
                         <span class="nav-link-title">
-                            Dashboard
+                            {{ __('messages.dashboard') }}
                         </span>
                     </a>
                 </li>
@@ -28,46 +56,46 @@
                             <i class="fas fa-users"></i>
                         </span>
                             <span class="nav-link-title">
-                            Users
+                            {{ __('messages.users') }}
                         </span>
                         </a>
                     </li>
                 @endcanany
                 @canany(['create-role', 'read-role', 'update-role', 'delete-role'])
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('roles.index') }}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('roles.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="fas fa-users-cog"></i>
                         </span>
-                        <span class="nav-link-title">
-                            Roles
+                            <span class="nav-link-title">
+                            {{ __('messages.roles') }}
                         </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
                 @endcanany
                 @canany(['create-permission', 'read-permission', 'update-permission', 'delete-permission'])
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('permissions.index') }}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('permissions.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="fas fa-shield-alt"></i>
                         </span>
-                        <span class="nav-link-title">
-                            Permissions
+                            <span class="nav-link-title">
+                            {{ __('messages.permissions') }}
                         </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
                 @endcanany
                 @canany(['create-post', 'read-post', 'update-post', 'delete-post'])
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('posts.index') }}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="fas fa-newspaper"></i>
                         </span>
-                        <span class="nav-link-title">
-                            Posts
+                            <span class="nav-link-title">
+                            {{ __('messages.posts') }}
                         </span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
                 @endcanany
             </ul>
         </div>

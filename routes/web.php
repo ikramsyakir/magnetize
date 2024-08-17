@@ -4,8 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Themes\ThemeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +26,8 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {
+    // Change theme
+    Route::post('update-theme', ThemeController::class)->name('update-theme');
 
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -42,6 +44,5 @@ Route::middleware(['auth'])->group(function () {
 
     // Post
     Route::resource('posts', PostController::class);
-
 });
 

@@ -1,7 +1,7 @@
-@extends('layouts.base', ['body' => 'antialiased'])
+@extends('layouts.base', ['body' => ''])
 
 @section('content')
-    <div class="wrapper">
+    <div class="page">
 
         @include('layouts.partials._navigation')
 
@@ -14,3 +14,9 @@
 
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        window.theme = "{{ auth()->user()->theme }}";
+    </script>
+@endpush

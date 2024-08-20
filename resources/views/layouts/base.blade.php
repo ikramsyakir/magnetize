@@ -1,3 +1,8 @@
+@php
+    use App\Utilities\Localization;
+    use Illuminate\Support\Js;
+@endphp
+
 <!doctype html>
 <html lang="{{ App::getLocale() }}">
 <head>
@@ -8,24 +13,30 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ config('app.name') }}</title>
+    <title>@yield('title') - {{ config('app.name') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @include('layouts.partials._favicons')
+    @include('layouts.partials.favicons')
 
     @stack('styles')
 </head>
-<body class="{{ $body }}">
+<body class="{{ $body }}" data-bs-theme="{{ auth()->user() ? auth()->user()->theme : 'light' }}">
 
-    @yield('content')
+@yield('content')
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {csrfToken: '{{ csrf_token() }}'}
-    </script>
+<!-- Scripts -->
+<script>
+    window.Laravel = {csrfToken: '{{ csrf_token() }}'};
+    window.messages = {{ Js::from(Localization::get()) }};
+</script>
 
-    @stack('scripts')
+<!-- Global route to JS -->
+@routes
+
+@include('sweetalert::alert')
+
+@stack('scripts')
 </body>
 </html>
 

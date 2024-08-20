@@ -1,4 +1,4 @@
-@extends('layouts.base', ['body' => 'antialiased border-top-wide border-primary d-flex flex-column'])
+@extends('layouts.base', ['body' => 'd-flex flex-column'])
 
 @section('content')
     <div class="page page-center">

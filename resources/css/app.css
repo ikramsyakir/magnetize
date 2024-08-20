@@ -1,5 +1,5 @@
 @import "@tabler/core";
-@import "@tabler/icons/iconfont/tabler-icons.css";
+@import "@tabler/icons-webfont/dist/tabler-icons.scss";
 @import "summernote/dist/summernote.min.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "custom.css";

@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 import _ from "lodash";
 window._ = _;
 
@@ -25,6 +27,7 @@ window.axios.interceptors.response.use(
                 text: window.messages.page_expired_try_again,
                 allowOutsideClick: false,
                 allowEscapeKey: false,
+                heightAuto: false,
             }).then(function () {
                 window.location.reload();
             });

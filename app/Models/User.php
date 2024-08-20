@@ -16,6 +16,9 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
+    const string STORAGE_AVATAR_PATH = 'app/public/uploads/avatar/';
+    const string PUBLIC_AVATAR_PATH = 'storage/uploads/avatar/';
+
     /**
      * The attributes that are mass assignable.
      *

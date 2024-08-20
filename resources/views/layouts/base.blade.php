@@ -21,7 +21,7 @@
 
     @stack('styles')
 </head>
-<body class="{{ $body }}" data-bs-theme="{{ auth()->user()->theme }}">
+<body class="{{ $body }}" data-bs-theme="{{ auth()->user() ? auth()->user()->theme : 'light' }}">
 
 @yield('content')
 

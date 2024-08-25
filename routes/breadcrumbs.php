@@ -7,6 +7,12 @@ Breadcrumbs::for('dashboard', function ($trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+// Profile
+Breadcrumbs::for('profile.edit', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('messages.profile'), route('profile.edit'));
+});
+
 // Dashboard / Users
 Breadcrumbs::for('users', function ($trail) {
     $trail->parent('dashboard');

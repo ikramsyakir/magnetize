@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     @can('user-profile')
-                        <a href="{{ route('users.show', auth()->user()->id) }}" class="dropdown-item">
+                        <a href="{{ route('profile.edit') }}" class="dropdown-item">
                             {{ __('messages.profile') }}
                         </a>
                     @endcan

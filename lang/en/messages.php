@@ -36,6 +36,7 @@ return [
     'roles' => 'Roles',
     'permissions' => 'Permissions',
     'posts' => 'Posts',
-    'User not found' => 'User not found',
-    'Successfully update theme' => 'Successfully update theme',
+    'user_not_found' => 'User not found',
+    'successfully_update_theme' => 'Successfully update theme',
+    'manage_account' => 'Manage Account',
 ];

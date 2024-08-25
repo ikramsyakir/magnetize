@@ -36,6 +36,7 @@ return [
     'roles' => 'Peranan',
     'permissions' => 'Kebenaran',
     'posts' => 'Catatan',
-    'User not found' => 'Pengguna tidak ditemui',
-    'Successfully update theme' => 'Tema berjaya dikemaskini',
+    'user_not_found' => 'Pengguna tidak ditemui',
+    'successfully_update_theme' => 'Tema berjaya dikemaskini',
+    'manage_account' => 'Pengurusan Akaun',
 ];

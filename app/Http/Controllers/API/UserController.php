@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Users\User;
 use App\Notifications\UserChangedEmail;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;

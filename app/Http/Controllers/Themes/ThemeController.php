@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Themes;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Users\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

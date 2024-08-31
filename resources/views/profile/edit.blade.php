@@ -35,7 +35,7 @@
                             <div class="row align-items-center mb-3">
                                 <div class="col-auto">
                                     <span class="avatar avatar-xl"
-                                          style="background-image: url(./static/avatars/000m.jpg)"></span>
+                                          style="background-image: url({{ auth()->user()->getAvatarPath() }})"></span>
                                 </div>
                                 <div class="col-auto">
                                     <a href="#" class="btn">Change avatar</a>

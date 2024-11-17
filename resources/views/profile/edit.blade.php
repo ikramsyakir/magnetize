@@ -12,24 +12,10 @@
         <div class="container-xl">
             <div class="card">
                 <div class="row g-0">
-                    <div class="col-12 col-md-3 border-end">
-                        <div class="card-body">
-                            <h4 class="subheader">{{ __('messages.manage_account') }}</h4>
-                            <div class="list-group list-group-transparent">
-                                <a href="#"
-                                   class="list-group-item list-group-item-action d-flex align-items-center active">
-                                    {{ __('Profile Information') }}
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                                    {{ __('Update Password') }}
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                                    {{ __('Delete Account') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-9 d-flex flex-column">
+
+                    @include('profile.partials.menu', ['profile' => true])
+
+                    <div id="app" class="col-12 col-md-9 d-flex flex-column">
                         <div class="card-body">
                             <h2 class="mb-5">{{ __('Profile Information') }}</h2>
                             <div class="row align-items-center mb-3">
@@ -38,10 +24,13 @@
                                           style="background-image: url({{ auth()->user()->getAvatarPath() }})"></span>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="btn">Change avatar</a>
+                                    <button class="btn" onclick="$('#avatar').trigger('click');">
+                                        {{ __('messages.change_avatar') }}
+                                    </button>
+                                    <input type="file" name="avatar" id="avatar" class="d-none">
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="btn btn-ghost-danger">Delete avatar</a>
+                                    <a href="#" class="btn btn-ghost-danger">{{ __('messages.delete_avatar') }}</a>
                                 </div>
                             </div>
                             <div class="row">
@@ -49,13 +38,15 @@
                                     <div class="mb-3">
                                         <label class="form-label required">Name</label>
                                         <div>
-                                            <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                                            <input type="email" class="form-control" aria-describedby="emailHelp"
+                                                   placeholder="Enter email">
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label required">Email address</label>
                                         <div>
-                                            <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+                                            <input type="email" class="form-control" aria-describedby="emailHelp"
+                                                   placeholder="Enter email">
                                         </div>
                                     </div>
                                 </div>
@@ -72,3 +63,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/views/profile/edit.js')
+@endpush

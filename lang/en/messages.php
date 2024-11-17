@@ -39,4 +39,6 @@ return [
     'user_not_found' => 'User not found',
     'successfully_update_theme' => 'Successfully update theme',
     'manage_account' => 'Manage Account',
+    'change_avatar' => 'Change avatar',
+    'delete_avatar' => 'Delete avatar',
 ];

@@ -14,6 +14,7 @@ export default defineConfig({
             'resources/js/views/auth/reset-password.js',
             'resources/js/views/auth/confirm-password.js',
             'resources/js/views/layouts/partials/header.js',
+            'resources/js/views/profile/edit.js',
         ]),
         vue({
             template: {

@@ -39,4 +39,6 @@ return [
     'user_not_found' => 'Pengguna tidak ditemui',
     'successfully_update_theme' => 'Tema berjaya dikemaskini',
     'manage_account' => 'Pengurusan Akaun',
+    'change_avatar' => 'Tukar avatar',
+    'delete_avatar' => 'Padam avatar',
 ];

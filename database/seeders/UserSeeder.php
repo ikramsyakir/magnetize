@@ -6,6 +6,7 @@ use App\Models\Users\User;
 use App\Utilities\Theme;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravolt\Avatar\Facade as Avatar;
 
@@ -22,9 +23,9 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('password'),
             'avatar' => $fileName,
-            'is_initial_avatar' => true,
+            'avatar_type' => User::AVATAR_TYPE_INITIAL,
             'theme' => Theme::LIGHT,
             'remember_token' => Str::random(10),
         ]);

@@ -20,7 +20,8 @@ class Database extends Command
         }
 
         $this->call('migrate:fresh', ['--quiet' => true]);
-        File::cleanDirectory(storage_path('uploads'));
+        File::cleanDirectory(storage_path('app/public/uploads'));
+        // Add another folder if exists
 
         if ($this->option('dev')) {
             $this->call('db:seed');

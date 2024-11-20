@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Users\User;
 use App\Utilities\Theme;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->boolean('is_initial_avatar')->default(true);
+            $table->string('avatar_type')->default(User::AVATAR_TYPE_INITIAL)->comment('Source of the avatar: initial (default) or uploaded');
             $table->string('theme')->default(Theme::LIGHT);
             $table->rememberToken();
             $table->timestamps();

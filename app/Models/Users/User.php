@@ -20,48 +20,25 @@ class User extends Authenticatable implements MustVerifyEmail
     const string STORAGE_AVATAR_PATH = 'app/public/uploads/avatars/';
     const string PUBLIC_AVATAR_PATH = 'uploads/avatars/';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    const string AVATAR_TYPE_INITIAL = 'initial';
+    const string AVATAR_TYPE_UPLOADED = 'uploaded';
+
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Send the email verification notification.
-     *
-     * @return void
-     */
     public function sendEmailVerificationNotification()
     {
         $this->notify(new VerifyEmailNotification());
     }
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
@@ -75,5 +52,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatarPath(): string
     {
         return Storage::url(self::PUBLIC_AVATAR_PATH.$this->avatar);
+    }
+
+    public static function avatarTypes(): array
+    {
+        $types = [
+            self::AVATAR_TYPE_INITIAL,
+            self::AVATAR_TYPE_UPLOADED,
+        ];
+
+        return array_combine($types, $types);
     }
 }

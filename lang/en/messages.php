@@ -41,4 +41,6 @@ return [
     'manage_account' => 'Manage Account',
     'change_avatar' => 'Change avatar',
     'delete_avatar' => 'Delete avatar',
+
+    'profile_successfully_updated' => 'Profile successfully updated',
 ];

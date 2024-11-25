@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravolt/avatar": "^5.1",
         "realrashid/sweet-alert": "^7.1",
+        "spatie/laravel-flash": "^1.10",
         "spatie/laravel-permission": "^6.7",
         "tightenco/ziggy": "^2.2"
     },

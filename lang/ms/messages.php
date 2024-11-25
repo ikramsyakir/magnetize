@@ -41,4 +41,6 @@ return [
     'manage_account' => 'Pengurusan Akaun',
     'change_avatar' => 'Tukar avatar',
     'delete_avatar' => 'Padam avatar',
+
+    'profile_successfully_updated' => 'Profil berjaya dikemaskini',
 ];

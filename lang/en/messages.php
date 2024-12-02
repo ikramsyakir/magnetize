@@ -43,4 +43,5 @@ return [
     'delete_avatar' => 'Delete avatar',
 
     'profile_successfully_updated' => 'Profile successfully updated',
+    'avatar_max_size' => 'The :attribute must not be greater than 3 MB.',
 ];

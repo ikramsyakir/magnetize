@@ -17,4 +17,11 @@ class ProfileUpdateRequest extends FormRequest
             'avatar_type' => ['required', 'string', Rule::in(array_keys(User::avatarTypes()))],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'avatar.max' => __('messages.avatar_max_size'),
+        ];
+    }
 }

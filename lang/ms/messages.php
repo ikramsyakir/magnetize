@@ -43,4 +43,5 @@ return [
     'delete_avatar' => 'Padam avatar',
 
     'profile_successfully_updated' => 'Profil berjaya dikemaskini',
+    'avatar_max_size' => 'Saiz :attribute mesti 3 MB.',
 ];

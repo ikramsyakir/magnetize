@@ -6,7 +6,7 @@
                class="list-group-item list-group-item-action d-flex align-items-center {{ isset($profile) && $profile ? 'active' : null }}">
                 {{ __('Profile Information') }}
             </a>
-            <a href="#"
+            <a href="{{ route('profile.update-password') }}"
                class="list-group-item list-group-item-action d-flex align-items-center {{ isset($updatePassword) && $updatePassword ? 'active' : null }}">
                 {{ __('Update Password') }}
             </a>

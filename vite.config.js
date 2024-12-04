@@ -16,6 +16,7 @@ export default defineConfig({
                 'resources/js/views/auth/confirm-password.js',
                 'resources/js/views/layouts/partials/header.js',
                 'resources/js/views/profile/edit.js',
+                'resources/js/views/profile/update-password.js',
             ],
             refresh: true,
         }),

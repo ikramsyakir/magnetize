@@ -7,12 +7,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class PasswordController extends Controller
 {
-    /**
-     * Update the user's password.
-     */
+    public function edit(Request $request): View
+    {
+        return view('profile.update-password', [
+            'user' => $request->user(),
+        ]);
+    }
+
     public function update(Request $request): RedirectResponse
     {
         $validated = $request->validateWithBag('updatePassword', [

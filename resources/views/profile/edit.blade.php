@@ -1,14 +1,11 @@
-@php
-    use App\Models\Users\User;
-    use Illuminate\Support\Js;
-@endphp
+@use(App\Models\Users\User)
+@use(Illuminate\Support\Js)
 
 @extends('layouts.app')
 
 @section('title', __('messages.profile'))
 
 @section('page-title', __('messages.profile'))
-
 
 @section('breadcrumbs', Breadcrumbs::render('profile.edit'))
 
@@ -25,8 +22,11 @@
                             @csrf
                             @method('PATCH')
                             <div class="card-body">
-                                <h2 class="mb-5">{{ __('Profile Information') }}</h2>
-                                <div class="row align-items-center mb-3">
+                                <h2 class="mb-1">{{ __('Profile Information') }}</h2>
+                                <small class="text-muted">
+                                    {{ __('messages.update_your_accounts_profile_information_email_address_and_avatar') }}
+                                </small>
+                                <div class="row align-items-center mt-5 mb-3">
                                     <div class="col-auto">
                                     <span class="avatar avatar-xl"
                                           :style="{ backgroundImage: `url(${avatarPreview})` }"></span>

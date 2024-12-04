@@ -13,6 +13,12 @@ Breadcrumbs::for('profile.edit', function ($trail) {
     $trail->push(__('messages.profile'), route('profile.edit'));
 });
 
+// Update Password
+Breadcrumbs::for('profile.update-password', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('Update Password'), route('profile.update-password'));
+});
+
 // Dashboard / Users
 Breadcrumbs::for('users', function ($trail) {
     $trail->parent('dashboard');

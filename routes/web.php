@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PostController;
@@ -33,8 +34,13 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Profile Information
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Update Password
+    Route::get('/profile/update-password', [PasswordController::class, 'edit'])->name('profile.update-password');
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Roles

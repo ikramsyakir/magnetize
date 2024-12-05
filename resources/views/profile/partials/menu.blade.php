@@ -10,7 +10,7 @@
                class="list-group-item list-group-item-action d-flex align-items-center {{ isset($updatePassword) && $updatePassword ? 'active' : null }}">
                 {{ __('Update Password') }}
             </a>
-            <a href="#"
+            <a href="{{ route('profile.delete-account') }}"
                class="list-group-item list-group-item-action d-flex align-items-center {{ isset($deleteAccount) && $deleteAccount ? 'active' : null }}">
                 {{ __('Delete Account') }}
             </a>

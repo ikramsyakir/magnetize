@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/js/views/layouts/partials/header.js',
                 'resources/js/views/profile/edit.js',
                 'resources/js/views/profile/update-password.js',
+                'resources/js/views/profile/delete-account.js',
             ],
             refresh: true,
         }),

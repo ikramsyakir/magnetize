@@ -1,5 +1,3 @@
-@use(Illuminate\Support\Js)
-
 @extends('layouts.app')
 
 @section('title', __('Update Password'))

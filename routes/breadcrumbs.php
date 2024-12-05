@@ -1,6 +1,7 @@
 <?php
 
 use Diglactic\Breadcrumbs\Breadcrumbs;
+use Illuminate\Support\Str;
 
 // Dashboard
 Breadcrumbs::for('dashboard', function ($trail) {
@@ -17,6 +18,12 @@ Breadcrumbs::for('profile.edit', function ($trail) {
 Breadcrumbs::for('profile.update-password', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('Update Password'), route('profile.update-password'));
+});
+
+// Delete Account
+Breadcrumbs::for('profile.delete-account', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('Delete Account'), route('profile.delete-account'));
 });
 
 // Dashboard / Users

@@ -73,7 +73,12 @@ class ProfileController extends Controller
         return response()->json(['status' => true, 'redirect' => route('profile.edit', absolute: false)]);
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function deleteAccount(): View
+    {
+        return view('profile.delete-account');
+    }
+
+    public function destroy(Request $request): JsonResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
@@ -88,6 +93,8 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        flash()->success(__('messages.account_successfully_deleted'));
+
+        return response()->json(['status' => true, 'redirect' => route('login', absolute: false)]);
     }
 }

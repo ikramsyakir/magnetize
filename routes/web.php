@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     // Update Password
     Route::get('/profile/update-password', [PasswordController::class, 'edit'])->name('profile.update-password');
 
+    // Delete Account
+    Route::get('/profile/delete-account', [ProfileController::class, 'deleteAccount'])->name('profile.delete-account');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Roles

@@ -44,6 +44,7 @@ return [
 
     'profile_successfully_updated' => 'Profil berjaya dikemaskini',
     'password_successfully_updated' => 'Kata laluan berjaya dikemaskini',
+    'account_successfully_deleted' => 'Akaun berjaya dipadam',
     'avatar_max_size' => 'Saiz :attribute mesti 3 MB.',
     'update_your_accounts_profile_information_email_address_and_avatar' => 'Kemaskini akaun anda maklumat profil, alamat e-mel dan avatar',
 ];

@@ -44,6 +44,7 @@ return [
 
     'profile_successfully_updated' => 'Profile successfully updated',
     'password_successfully_updated' => 'Password successfully updated',
+    'account_successfully_deleted' => 'Account successfully deleted',
     'avatar_max_size' => 'The :attribute must not be greater than 3 MB.',
     'update_your_accounts_profile_information_email_address_and_avatar' => 'Update your account\'s profile information, email address, and avatar.',
 ];

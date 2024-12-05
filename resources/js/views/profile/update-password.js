@@ -18,7 +18,9 @@ createApp({
 
             let data = {
                 _method: document.getElementsByName("_method")[0].value,
-                current_password: this.current_password
+                current_password: this.current_password,
+                password: this.password,
+                password_confirmation: this.password_confirmation
             };
 
             await axios.post(route('password.update'), data).then(response => {

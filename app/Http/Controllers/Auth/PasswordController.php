@@ -3,32 +3,28 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\Profiles\UpdatePasswordRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class PasswordController extends Controller
 {
-    public function edit(Request $request): View
+    public function edit(): View
     {
-        return view('profile.update-password', [
-            'user' => $request->user(),
-        ]);
+        return view('profile.update-password');
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(UpdatePasswordRequest $request): JsonResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
-        ]);
+        $validated = $request->validated();
 
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back()->with('status', 'password-updated');
+        flash()->success(__('messages.password_successfully_updated'));
+
+        return response()->json(['status' => true, 'redirect' => route('profile.update-password', absolute: false)]);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\Profiles\UpdateProfileRequest;
 use App\Models\Users\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +24,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(ProfileUpdateRequest $request): JsonResponse
+    public function update(UpdateProfileRequest $request): JsonResponse
     {
         $validated = $request->validated();
 

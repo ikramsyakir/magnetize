@@ -83,8 +83,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        window.user = {{ Js::from($user) }};
-    </script>
     @vite('resources/js/views/profile/update-password.js')
 @endpush

@@ -34,12 +34,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function sendEmailVerificationNotification()
+    protected static function booted(): void
+    {
+        static::deleted(function (User $user) {
+            $avatarPath = User::PUBLIC_AVATAR_PATH.$user->avatar;
+
+            // Avatar exists
+            if (Storage::disk('public')->exists($avatarPath)) {
+                Storage::disk('public')->delete($avatarPath);
+            }
+        });
+    }
+
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailNotification());
     }
 
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }

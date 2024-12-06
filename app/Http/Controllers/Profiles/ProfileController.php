@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profiles\DeleteAccountRequest;
 use App\Http\Requests\Profiles\UpdateProfileRequest;
 use App\Models\Users\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -78,11 +77,9 @@ class ProfileController extends Controller
         return view('profile.delete-account');
     }
 
-    public function destroy(Request $request): JsonResponse
+    public function destroy(DeleteAccountRequest $request): JsonResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        $request->validated();
 
         $user = $request->user();
 

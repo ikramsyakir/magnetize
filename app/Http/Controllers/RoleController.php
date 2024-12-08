@@ -5,20 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateRole;
 use App\Http\Requests\UpdateRole;
 use App\Models\Permission;
-use App\Models\Role;
+use App\Models\Roles\Role;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Throwable;
 
 class RoleController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('permission:create-role')->only('create', 'store');
@@ -27,16 +22,9 @@ class RoleController extends Controller
         $this->middleware('permission:delete-role')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(): View
     {
-        $roles = Role::filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
-
-        return view('roles.index', compact('roles'));
+        return view('roles.index');
     }
 
     /**

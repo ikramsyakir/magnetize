@@ -18,3 +18,7 @@ table thead th a, a:hover {
     text-decoration: none;
     color: #656d77;
 }
+
+.flatpickr-calendar {
+    background: var(--tblr-light-bg-subtle) !important;
+}

@@ -15,6 +15,8 @@
 
     <title>@yield('title') - {{ config('app.name') }}</title>
 
+    @livewireStyles
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @include('layouts.partials.favicons')
@@ -38,6 +40,8 @@
 
 <!-- toast --->
 @include('partials.toasts')
+
+@livewireScriptConfig
 
 @stack('scripts')
 </body>

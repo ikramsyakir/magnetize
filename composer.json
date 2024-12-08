@@ -17,12 +17,14 @@
         "laravel/tinker": "^2.5",
         "laravolt/avatar": "^5.1",
         "realrashid/sweet-alert": "^7.1",
+        "spatie/laravel-flash": "^1.10",
         "spatie/laravel-permission": "^6.7",
         "tightenco/ziggy": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
         "fakerphp/faker": "^1.9.1",
+        "laradumps/laradumps": "^3.0",
         "laravel-lang/common": "^6.2",
         "laravel/breeze": "^2.0",
         "laravel/sail": "^1.0.1",

@@ -1,20 +1,26 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import path from "path";
 
 export default defineConfig({
     plugins: [
-        laravel([
-            'resources/css/app.css',
-            'resources/js/app.js',
-            'resources/js/views/auth/login.js',
-            'resources/js/views/auth/register.js',
-            'resources/js/views/auth/forgot-password.js',
-            'resources/js/views/auth/reset-password.js',
-            'resources/js/views/auth/confirm-password.js',
-            'resources/js/views/layouts/partials/header.js',
-        ]),
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/js/views/auth/login.js',
+                'resources/js/views/auth/register.js',
+                'resources/js/views/auth/forgot-password.js',
+                'resources/js/views/auth/reset-password.js',
+                'resources/js/views/auth/confirm-password.js',
+                'resources/js/views/layouts/partials/header.js',
+                'resources/js/views/profile/edit.js',
+                'resources/js/views/profile/update-password.js',
+                'resources/js/views/profile/delete-account.js',
+            ],
+            refresh: true,
+        }),
         vue({
             template: {
                 transformAssetUrls: {

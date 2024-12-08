@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Users\User;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

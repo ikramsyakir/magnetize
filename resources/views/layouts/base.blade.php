@@ -36,6 +36,9 @@
 
 @include('sweetalert::alert')
 
+<!-- toast --->
+@include('partials.toasts')
+
 @stack('scripts')
 </body>
 </html>

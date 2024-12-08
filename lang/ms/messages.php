@@ -36,6 +36,15 @@ return [
     'roles' => 'Peranan',
     'permissions' => 'Kebenaran',
     'posts' => 'Catatan',
-    'User not found' => 'Pengguna tidak ditemui',
-    'Successfully update theme' => 'Tema berjaya dikemaskini',
+    'user_not_found' => 'Pengguna tidak ditemui',
+    'successfully_update_theme' => 'Tema berjaya dikemaskini',
+    'manage_account' => 'Pengurusan Akaun',
+    'change_avatar' => 'Tukar avatar',
+    'delete_avatar' => 'Padam avatar',
+
+    'profile_successfully_updated' => 'Profil berjaya dikemaskini',
+    'password_successfully_updated' => 'Kata laluan berjaya dikemaskini',
+    'account_successfully_deleted' => 'Akaun berjaya dipadam',
+    'avatar_max_size' => 'Saiz :attribute mesti 3 MB.',
+    'update_your_accounts_profile_information_email_address_and_avatar' => 'Kemaskini akaun anda maklumat profil, alamat e-mel dan avatar',
 ];

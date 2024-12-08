@@ -14,7 +14,7 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                    aria-label="Open user menu">
                     <span class="avatar avatar-sm"
-                          style="background-image: url({{ auth()->user()->avatar ? asset(auth()->user()->avatar) : Avatar::create(auth()->user()->name)->toBase64() }})"></span>
+                          style="background-image: url({{ auth()->user()->getAvatarPath() }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-muted">{{ Auth::user()->email }}</div>
@@ -22,16 +22,16 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     @can('user-profile')
-                        <a href="{{ route('users.show', auth()->user()->id) }}" class="dropdown-item">
+                        <a href="{{ route('profile.edit') }}" class="dropdown-item">
                             {{ __('messages.profile') }}
                         </a>
                     @endcan
                     <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                       onclick="event.preventDefault();document.getElementById('nav-logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="nav-logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </div>

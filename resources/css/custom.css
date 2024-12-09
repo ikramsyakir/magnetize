@@ -20,5 +20,62 @@ table thead th a, a:hover {
 }
 
 .flatpickr-calendar {
-    background: var(--tblr-light-bg-subtle) !important;
+    background-color: var(--tblr-body-bg) !important;
+    color: var(--tblr-body-color) !important;
+    border-color: var(--tblr-border-color) !important;
 }
+
+.flatpickr-day {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day.today {
+    background-color: var(--tblr-primary) !important;
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day .inRange {
+    background-color: var(--tblr-primary) !important;
+}
+
+.flatpickr-day:hover {
+    background-color: var(--tblr-secondary) !important;
+}
+
+.flatpickr-month {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-weekday {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-prev-month svg path {
+    fill: var(--tblr-body-color) !important;
+}
+
+.flatpickr-next-month svg path {
+    fill: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day.startRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+
+.flatpickr-day.inRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+
+.flatpickr-day.endRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+

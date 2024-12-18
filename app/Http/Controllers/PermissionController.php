@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePermission;
 use App\Http\Requests\UpdatePermission;
-use App\Models\Permission;
+use App\Models\Permissions\Permission;
 use Exception;
 use Illuminate\Http\Request;
 use Throwable;
@@ -18,10 +18,8 @@ class PermissionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:create-permission')->only('create', 'store');
-        $this->middleware('permission:read-permission')->only('index');
-        $this->middleware('permission:update-permission')->only('edit', 'update');
-        $this->middleware('permission:delete-permission')->only('destroy');
+        $this->middleware('permission:browse-permissions')->only('index');
+        $this->middleware('permission:read-permissions')->only('show');
     }
 
     /**
@@ -31,9 +29,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $permissions = Permission::filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
-
-        return view('permissions.index', compact('permissions'));
+        return view('permissions.index');
     }
 
     /**

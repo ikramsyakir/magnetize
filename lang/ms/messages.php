@@ -52,4 +52,10 @@ return [
     'created_at' => 'Dicipta Pada',
     'updated_at' => 'Dikemaskini Pada',
     'search' => 'Carian',
+    'actions' => 'Tindakan',
+    'role_list' => 'Senarai Peranan',
+    'create_role' => 'Cipta Peranan',
+    'view' => 'Lihat',
+    'edit' => 'Kemaskini',
+    'delete' => 'Padam',
 ];

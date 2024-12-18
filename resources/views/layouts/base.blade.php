@@ -1,7 +1,5 @@
-@php
-    use App\Utilities\Localization;
-    use Illuminate\Support\Js;
-@endphp
+@use(App\Utilities\Localization)
+@use(Illuminate\Support\Js)
 
 <!doctype html>
 <html lang="{{ App::getLocale() }}">

@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
         File::ensureDirectoryExists(storage_path(User::STORAGE_AVATAR_PATH));
 
         $fileName = Str::random(30).'.png';
-        Avatar::create('Admin')->save(storage_path(User::STORAGE_AVATAR_PATH.$fileName), 100);
+        Avatar::create('Superadmin')->save(storage_path(User::STORAGE_AVATAR_PATH.$fileName), 100);
 
         $admin = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'name' => 'Superadmin',
+            'email' => 'superadmin@superadmin.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'avatar' => $fileName,
@@ -30,6 +30,6 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('superadmin');
     }
 }

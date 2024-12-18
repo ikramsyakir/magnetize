@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
@@ -8,7 +9,7 @@
     <div class="page-body">
         <div class="container-xl">
             <div class="row">
-                @canany(['create-user', 'read-user', 'delete-user'])
+                @can('browse-users')
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-0 mt-0 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3">
                         <div class="card">
                             <div class="card-cover card-cover-blurred text-center"
@@ -24,8 +25,8 @@
                             </div>
                         </div>
                     </div>
-                @endcanany
-                @canany(['create-role', 'read-role', 'update-role', 'delete-role'])
+                @endcan
+                @can('browse-roles')
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-0 mt-0 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3">
                         <div class="card">
                             <div class="card-cover card-cover-blurred text-center"
@@ -41,8 +42,8 @@
                             </div>
                         </div>
                     </div>
-                @endcanany
-                @canany(['create-post', 'read-post', 'update-post', 'delete-post'])
+                @endcan
+                @can('browse-posts')
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-0 mt-0 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3">
                         <div class="card">
                             <div class="card-cover card-cover-blurred text-center"
@@ -57,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                @endcanany
+                @endcan
             </div>
         </div>
     </div>

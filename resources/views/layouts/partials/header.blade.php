@@ -32,7 +32,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    @can('user-profile')
+                    @can('profile')
                         <a href="{{ route('profile.edit') }}" class="dropdown-item">
                             {{ __('messages.profile') }}
                         </a>

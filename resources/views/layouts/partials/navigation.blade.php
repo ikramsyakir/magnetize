@@ -21,7 +21,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    @can('user-profile')
+                    @can('profile')
                         <a href="{{ route('profile.edit') }}" class="dropdown-item">
                             {{ __('messages.profile') }}
                         </a>
@@ -39,7 +39,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav pt-lg-3">
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link" href="{{ route('dashboard') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-dashboard fs-2"></i>
@@ -49,8 +49,8 @@
                         </span>
                     </a>
                 </li>
-                @canany(['create-user', 'read-user', 'delete-user'])
-                    <li class="nav-item">
+                @can('browse-users')
+                    <li class="nav-item mb-1">
                         <a class="nav-link" href="{{ route('users.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-users fs-2"></i>
@@ -60,9 +60,9 @@
                         </span>
                         </a>
                     </li>
-                @endcanany
-                @canany(['create-role', 'read-role', 'update-role', 'delete-role'])
-                    <li class="nav-item">
+                @endcan
+                @can('browse-roles')
+                    <li class="nav-item mb-1">
                         <a class="nav-link" href="{{ route('roles.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-user-cog fs-2"></i>
@@ -72,9 +72,9 @@
                         </span>
                         </a>
                     </li>
-                @endcanany
-                @canany(['create-permission', 'read-permission', 'update-permission', 'delete-permission'])
-                    <li class="nav-item">
+                @endcan
+                @can('browse-permissions')
+                    <li class="nav-item mb-1">
                         <a class="nav-link" href="{{ route('permissions.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-user-shield fs-2"></i>
@@ -84,9 +84,9 @@
                         </span>
                         </a>
                     </li>
-                @endcanany
-                @canany(['create-post', 'read-post', 'update-post', 'delete-post'])
-                    <li class="nav-item">
+                @endcan
+                @can('browse-posts')
+                    <li class="nav-item mb-1">
                         <a class="nav-link" href="{{ route('posts.index') }}">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                             <i class="ti ti-news fs-2"></i>
@@ -96,7 +96,7 @@
                         </span>
                         </a>
                     </li>
-                @endcanany
+                @endcan
             </ul>
         </div>
     </div>

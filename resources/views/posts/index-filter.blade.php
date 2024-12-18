@@ -23,7 +23,7 @@
                                     <label class="form-label" for="select-status">Status</label>
                                     <select name="status" class="form-select" id="select-status">
                                         <option disabled selected>Select</option>
-                                        @foreach(\App\Models\Post::STATUS as $index => $status)
+                                        @foreach(\App\Models\Posts\Post::STATUS as $index => $status)
                                             <option
                                                 value="{{ $index }}" {{ request()->get('status') == $index ? 'selected' : '' }}>{{ ucwords($status) }}</option>
                                         @endforeach
@@ -36,8 +36,14 @@
                                     <label class="form-label" for="select-status">Featured</label>
                                     <select name="featured" class="form-select" id="select-featured">
                                         <option disabled selected>Select</option>
-                                        <option value="{{ \App\Models\Post::FEATURED }}" {{ request()->has('featured') ? request()->get('featured') == \App\Models\Post::FEATURED ? 'selected' : '' : '' }}>Yes</option>
-                                        <option value="{{ \App\Models\Post::NOT_FEATURED }}" {{ request()->has('featured') ? request()->get('featured') == \App\Models\Post::NOT_FEATURED ? 'selected' : '' : '' }}>No</option>
+                                        <option
+                                            value="{{ \App\Models\Posts\Post::FEATURED }}" {{ request()->has('featured') ? request()->get('featured') == \App\Models\Posts\Post::FEATURED ? 'selected' : '' : '' }}>
+                                            Yes
+                                        </option>
+                                        <option
+                                            value="{{ \App\Models\Posts\Post::NOT_FEATURED }}" {{ request()->has('featured') ? request()->get('featured') == \App\Models\Posts\Post::NOT_FEATURED ? 'selected' : '' : '' }}>
+                                            No
+                                        </option>
                                     </select>
                                 </div>
                             </div>

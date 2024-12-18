@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire\Roles;
+namespace App\Livewire\Permissions;
 
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Roles\Role;
+use App\Models\Permissions\Permission;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
-class RoleTable extends DataTableComponent
+class PermissionTable extends DataTableComponent
 {
-    protected $model = Role::class;
+    protected $model = Permission::class;
 
     protected int $index = 0;
 
@@ -52,15 +52,15 @@ class RoleTable extends DataTableComponent
             Column::make(__('messages.updated_at'), "updated_at")
                 ->sortable()
                 ->format(fn($value) => $value ? $value->diffForHumans() : '-'),
-            Column::make(__('messages.actions'))
-                ->label(
-                    fn($row, Column $column) => view('roles.columns.table-actions')->withRow($row)
-                )
-                ->hideIf(
-                    !auth()->user()->can('read-roles') &&
-                    !auth()->user()->can('edit-roles') &&
-                    !auth()->user()->can('delete-roles')
-                )
+//            Column::make(__('messages.actions'))
+//                ->label(
+//                    fn($row, Column $column) => view('roles.columns.table-actions')->withRow($row)
+//                )
+//                ->hideIf(
+//                    !auth()->user()->can('read-roles') &&
+//                    !auth()->user()->can('edit-roles') &&
+//                    !auth()->user()->can('delete-roles')
+//                )
         ];
     }
 
@@ -107,30 +107,5 @@ class RoleTable extends DataTableComponent
                         ->whereDate('created_at', '<=', $dateRange['maxDate']); // maxDate is the end date selected
                 }),
         ];
-    }
-
-    public function destroy($id)
-    {
-        if (auth()->user()->cannot('delete-roles')) {
-            flash()->error(__('messages.user_does_not_have_the_right_permissions'));
-            return to_route('dashboard');
-        }
-
-        $model = Role::query()->find($id);
-
-        if ($model) {
-            $model->delete();
-
-            flash()->success(__('messages.role_successfully_deleted'));
-        } else {
-            flash()->error(__('messages.something_went_wrong'));
-        }
-
-        return to_route('roles.index');
-    }
-
-    public function customView(): string
-    {
-        return 'partials.livewire-delete-confirmation';
     }
 }

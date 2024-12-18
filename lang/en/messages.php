@@ -52,4 +52,10 @@ return [
     'created_at' => 'Created At',
     'updated_at' => 'Updated At',
     'search' => 'Search',
+    'actions' => 'Actions',
+    'role_list' => 'Role List',
+    'create_role' => 'Create Role',
+    'view' => 'View',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
 ];

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRole;
 use App\Http\Requests\UpdateRole;
-use App\Models\Permission;
+use App\Models\Permissions\Permission;
 use App\Models\Roles\Role;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -16,8 +16,7 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:create-role')->only('create', 'store');
-        $this->middleware('permission:read-role')->only('index');
+        $this->middleware('permission:browse-roles')->only('index');
         $this->middleware('permission:update-role')->only('edit', 'update');
         $this->middleware('permission:delete-role')->only('destroy');
     }

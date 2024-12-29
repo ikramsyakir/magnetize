@@ -96,3 +96,7 @@ table thead th a, a:hover {
     color: var(--tblr-body-color) !important; /* Secondary text color */
 }
 
+.icon-alert-triangle-size {
+    font-size: 4.5rem !important;
+}
+

@@ -171,7 +171,7 @@ class RolePermissionSeeder extends Seeder
                 'name' => 'add-roles',
                 'display_name' => 'add_roles',
                 'group' => $groups['roles'],
-                'description' => 'add_specific_role',
+                'description' => 'add_new_role',
             ],
             [
                 'name' => 'delete-roles',
@@ -224,8 +224,8 @@ class RolePermissionSeeder extends Seeder
             [
                 'name' => 'browse-posts',
                 'display_name' => 'browse_posts',
-                'group' => $groups['users'],
-                'description' => 'list_of_all_user',
+                'group' => $groups['posts'],
+                'description' => 'list_of_all_post',
             ],
             [
                 'name' => 'read-posts',
@@ -242,8 +242,8 @@ class RolePermissionSeeder extends Seeder
             [
                 'name' => 'add-posts',
                 'display_name' => 'add_posts',
-                'group' => $groups['users'],
-                'description' => 'add_posts',
+                'group' => $groups['posts'],
+                'description' => 'add_new_post',
             ],
             [
                 'name' => 'delete-posts',

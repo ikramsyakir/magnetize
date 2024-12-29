@@ -1,3 +1,5 @@
+@use(Illuminate\Support\Js)
+
 @extends('layouts.app')
 
 @section('title', __('messages.create_role'))
@@ -7,16 +9,18 @@
 @section('breadcrumbs', Breadcrumbs::render('roles.create'))
 
 @section('main-content')
-    <div class="page-body">
+    <div id="app" v-cloak class="page-body">
         <div class="container-xl">
-            <form method="POST" action="{{ route('roles.store') }}" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">{{ __('messages.create_role') }}</h3>
+                                <div class="text-muted">
+                                    {{ __('messages.create_a_new_role_to_manage_user_permissions') }}
+                                </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -71,17 +75,18 @@
                                 <div class="form-group mb-3">
                                     <label class="form-label">Permissions</label>
                                     <div class="row">
-                                        @foreach($permissions as $permission)
-                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                                                <label class="form-check form-switch mb-3">
-                                                    <input class="form-check-input" type="checkbox" name="permissions[]"
-                                                           value="{{ $permission->id }}"
-                                                        {{ (is_array(old('permissions')) and in_array($permission->id, old('permissions'))) ? ' checked' : '' }}>
-                                                    <span
-                                                        class="form-check-label">{{ $permission->display_name }}</span>
-                                                </label>
-                                            </div>
-                                        @endforeach
+                                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12"
+                                             v-for="permission in permissions" :key="permission.id">
+                                            <label class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" name="permissions[]"
+                                                       :value="permission.id">
+                                                <span class="form-check-label align-middle">
+                                                    @{{ permission.display_name }}
+                                                     <i class="ti ti-info-circle" v-tooltip
+                                                        :title="permission.description"></i>
+                                                </span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-footer text-end">
@@ -96,3 +101,10 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        window.permissions = {{ Js::from($permissions) }};
+    </script>
+    @vite('resources/js/views/roles/create.js')
+@endpush

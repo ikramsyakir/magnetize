@@ -58,4 +58,8 @@ return [
     'view' => 'Lihat',
     'edit' => 'Kemaskini',
     'delete' => 'Padam',
+    'are_you_sure' => 'Adakah anda pasti?',
+    'cancel' => 'Batal',
+    'you_wont_be_able_to_revert_this' => 'Anda tidak akan dapat mengembalikan ini',
+    'create_a_new_role_to_manage_user_permissions' => 'Cipta peranan baru untuk menguruskan kebenaran pengguna',
 ];

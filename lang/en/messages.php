@@ -58,4 +58,8 @@ return [
     'view' => 'View',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'are_you_sure' => 'Are you sure?',
+    'cancel' => 'Cancel',
+    'you_wont_be_able_to_revert_this' => 'You won\'t be able to revert this',
+    'create_a_new_role_to_manage_user_permissions' => 'Create a new role to manage user permissions',
 ];

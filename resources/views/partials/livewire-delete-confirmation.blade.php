@@ -4,8 +4,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="modal-status bg-danger"></div>
             <div class="modal-body text-center py-4">
-                <i class="ti ti-alert-triangle text-danger fs-1"></i>
-                <h3>{{ __('messages.are_you_sure') }}</h3>
+                <i class="ti ti-alert-triangle text-danger icon-alert-triangle-size"></i>
+                <h3 class="mt-4">{{ __('messages.are_you_sure') }}</h3>
                 <div class="text-secondary">{{ __('messages.you_wont_be_able_to_revert_this') }}</div>
             </div>
             <div class="modal-footer">
@@ -18,7 +18,7 @@
                         </div>
                         <div class="col">
                             <a id="confirm-delete-btn" href="#" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                {{ __('messages.yes_delete_it') }}
+                                {{ __('messages.delete') }}
                             </a>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
         new bootstrap.Modal('#modal-danger').show();
 
         $('#confirm-delete-btn').click(function () {
-            $wire.call('destroy', id); // Trigger Livewire method to delete files
+            $wire.call('destroy', id); // Trigger Livewire
             document.activeElement.blur();
         });
 

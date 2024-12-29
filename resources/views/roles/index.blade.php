@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Roles')
+@section('title', __('messages.roles'))
 
-@section('page-title', 'Roles')
+@section('page-title', __('messages.roles'))
 
 @section('breadcrumbs', Breadcrumbs::render('roles.index'))
 
@@ -27,7 +27,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @include('common.delete-item')
-@endpush

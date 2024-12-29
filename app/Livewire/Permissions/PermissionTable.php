@@ -29,7 +29,7 @@ class PermissionTable extends DataTableComponent
                 'class' => 'table card-table table-vcenter text-nowrap datatable'
             ])
             ->setTrAttributes(fn($row, $index) => ['default' => false, 'class' => 'align-middle'])
-            ->setPaginationWrapperAttributes(['class' => 'ms-3 mb-3']);
+            ->setPaginationWrapperAttributes(['class' => 'card-footer']);
     }
 
     public function columns(): array

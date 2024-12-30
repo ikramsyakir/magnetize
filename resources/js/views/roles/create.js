@@ -11,6 +11,9 @@ createApp({
         return {
             form: {
                 name: null,
+                display_name: null,
+                description: null,
+                permissions: [],
             },
             permissions: window.permissions,
             errors: [],
@@ -21,9 +24,9 @@ createApp({
         async submitForm() {
             this.loading = true;
 
-            let data = new FormData();
-            data.append('_method', document.getElementsByName("_method")[0].value);
-            data.append('name', this.form.name);
+            let data = {
+                name: this.form.name,
+            };
 
             await axios.post(route('roles.store'), data).then(response => {
                 this.errors = []; // Clear errors

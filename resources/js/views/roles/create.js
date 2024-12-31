@@ -26,6 +26,9 @@ createApp({
 
             let data = {
                 name: this.form.name,
+                display_name: this.form.display_name,
+                description: this.form.description,
+                permissions: this.form.permissions,
             };
 
             await axios.post(route('roles.store'), data).then(response => {

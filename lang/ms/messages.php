@@ -62,4 +62,6 @@ return [
     'cancel' => 'Batal',
     'you_wont_be_able_to_revert_this' => 'Anda tidak akan dapat mengembalikan ini',
     'create_a_new_role_to_manage_user_permissions' => 'Cipta peranan baru untuk menguruskan kebenaran pengguna',
+    'role_successfully_created' => 'Perana berjaya dicipta',
+    'role_successfully_deleted' => 'Perana berjaya dipadam',
 ];

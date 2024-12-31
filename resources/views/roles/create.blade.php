@@ -62,13 +62,17 @@
                                              v-for="permission in permissions" :key="permission.id">
                                             <label class="form-check form-switch mb-3">
                                                 <input class="form-check-input" type="checkbox"
-                                                       v-model="form.permissions" :value="permission.id">
+                                                       v-model="form.permissions" :value="permission.name">
                                                 <span class="form-check-label align-middle">
                                                     @{{ permission.display_name }}
                                                     <i class="ti ti-info-circle" v-tooltip
                                                        :title="permission.description"></i>
                                                 </span>
                                             </label>
+                                        </div>
+
+                                        <div class="invalid-feedback d-block" v-if="errors.permissions">
+                                            @{{ errors.permissions[0] }}
                                         </div>
                                     </div>
                                 </div>

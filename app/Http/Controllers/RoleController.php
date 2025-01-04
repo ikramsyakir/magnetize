@@ -19,8 +19,10 @@ class RoleController extends Controller
     public function __construct()
     {
         $this->middleware('permission:browse-roles')->only('index');
-        $this->middleware('permission:update-role')->only('edit', 'update');
-        $this->middleware('permission:delete-role')->only('destroy');
+        $this->middleware('permission:read-roles')->only('show');
+        $this->middleware('permission:edit-roles')->only('edit', 'update');
+        $this->middleware('permission:add-roles')->only('create', 'store');
+        $this->middleware('permission:delete-roles')->only('destroy');
     }
 
     public function index(): View
@@ -53,15 +55,11 @@ class RoleController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($id): View
     {
-        //
+        $model = Role::query()->findOrFail($id);
+
+        return view('roles.show', compact('model'));
     }
 
     /**

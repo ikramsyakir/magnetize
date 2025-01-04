@@ -35,7 +35,7 @@ class RolePermissionSeeder extends Seeder
             [
                 'name' => 'user',
                 'display_name' => 'User',
-                'description' => 'A normal user who can fill the form',
+                'description' => 'A normal user who can posts',
             ]
         ]);
 

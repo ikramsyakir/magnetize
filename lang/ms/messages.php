@@ -63,8 +63,11 @@ return [
     'you_wont_be_able_to_revert_this' => 'Anda tidak akan dapat mengembalikan ini',
     'create_a_new_role_to_manage_user_permissions' => 'Cipta peranan baru untuk menguruskan kebenaran pengguna',
     'role_successfully_created' => 'Perana berjaya dicipta',
+    'role_successfully_updated' => 'Perana berjaya dikemaskini',
     'role_successfully_deleted' => 'Perana berjaya dipadam',
     'view_role' => 'Lihat Peranan',
     'id' => 'ID',
     'no_permission' => 'Tiada Kebenaran',
+    'role_not_found' => 'Peranan Tidak Ditemui',
+    'edit_role' => 'Kemaskini Peranan',
 ];

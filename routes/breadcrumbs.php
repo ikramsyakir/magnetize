@@ -36,13 +36,13 @@ Breadcrumbs::for('roles.create', function ($trail) {
 // Dashboard / Roles / View Role
 Breadcrumbs::for('roles.show', function ($trail, Role $model) {
     $trail->parent('roles.index');
-    $trail->push(__('messages.view_role'), route('roles.show', $model->id));
+    $trail->push($model->display_name, route('roles.show', $model->id));
 });
 
 // Dashboard / Roles / Edit Role
-Breadcrumbs::for('edit_role', function ($trail, $role) {
-    $trail->parent('roles.index');
-    $trail->push('Edit Role', route('roles.edit', $role->id));
+Breadcrumbs::for('roles.edit', function ($trail, Role $model) {
+    $trail->parent('roles.show', $model);
+    $trail->push(__('messages.edit_role'), route('roles.edit', $model->id));
 });
 
 // Delete Account

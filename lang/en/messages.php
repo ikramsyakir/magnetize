@@ -63,8 +63,11 @@ return [
     'you_wont_be_able_to_revert_this' => 'You won\'t be able to revert this',
     'create_a_new_role_to_manage_user_permissions' => 'Create a new role to manage user permissions',
     'role_successfully_created' => 'Role successfully created',
+    'role_successfully_updated' => 'Role successfully updated',
     'role_successfully_deleted' => 'Role successfully deleted',
     'view_role' => 'View Role',
     'id' => 'ID',
     'no_permission' => 'No Permission',
+    'role_not_found' => 'Role Not Found',
+    'edit_role' => 'Edit Role',
 ];

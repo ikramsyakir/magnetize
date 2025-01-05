@@ -1,89 +1,93 @@
+@use(Illuminate\Support\Js)
+
 @extends('layouts.app')
 
-@section('title', 'Edit Role')
+@section('title', __('messages.edit_role'))
 
-@section('breadcrumbs', Breadcrumbs::render('edit_role', $role))
+@section('page-title', __('messages.edit_role'))
+
+@section('breadcrumbs', Breadcrumbs::render('roles.edit', $model))
 
 @section('main-content')
-    <div class="page-body">
+    <div id="app" v-cloak class="page-body">
         <div class="container-xl">
-            <form method="POST" action="{{ route('roles.update', $role->id) }}" enctype="multipart/form-data">
+            <form autocomplete="off" @submit.prevent="submitForm">
                 @csrf
                 @method('PUT')
 
-                <div class="row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Edit Role</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="text-muted">
+                            {{ __('messages.create_a_new_role_to_manage_user_permissions') }}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label required">{{ __('messages.name') }}</label>
+                                    <input type="text" id="name" v-model="form.name" class="form-control"
+                                           :class="{ 'is-invalid': errors.name }" disabled>
+                                    <div class="invalid-feedback" v-if="errors.name">@{{ errors.name[0] }}</div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                        <div class="form-group mb-3 ">
-                                            <label class="form-label required" for="name">Name</label>
 
-                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name }}" placeholder="Enter name" required autocomplete="name">
-
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                        <div class="form-group mb-3 ">
-                                            <label class="form-label required" for="display_name">Display Name</label>
-
-                                            <input id="display_name" type="text" class="form-control @error('display_name') is-invalid @enderror" name="display_name" value="{{ $role->display_name }}" placeholder="Enter Display Name" required autocomplete="display_name">
-
-                                            @error('display_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
+                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="display_name" class="form-label required">
+                                        {{ __('messages.display_name') }}
+                                    </label>
+                                    <input type="text" id="display_name" v-model="form.display_name"
+                                           class="form-control" :class="{ 'is-invalid': errors.display_name }">
+                                    <div class="invalid-feedback" v-if="errors.display_name">
+                                        @{{ errors.display_name[0] }}
                                     </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="description">Description</label>
+                            </div>
+                        </div>
 
-                                    <textarea id="description" name="description" class="form-control" data-bs-toggle="autosize" placeholder="Enter Description">{{ $role->description }}</textarea>
-
-                                    @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">{{ __('messages.description') }}</label>
+                                    <textarea id="description" v-model="form.description" class="form-control"
+                                              :class="{ 'is-invalid': errors.description }"></textarea>
+                                    <div class="invalid-feedback" v-if="errors.description">
+                                        @{{ errors.description[0] }}
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Permissions</label>
+
+                                <div class="mb-3">
+                                    <label class="form-label">{{ __('messages.permissions') }}</label>
                                     <div class="row">
-                                        @foreach($permissions as $permission)
-                                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                                                <label class="form-check form-switch mb-3">
-                                                    <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->id }}"
-                                                       @if(old('permissions'))
-                                                           {{ (is_array(old('permissions')) and in_array($permission->id, old('permissions'))) ? ' checked' : '' }}
-                                                       @else
-                                                           @foreach($role->permissions->pluck('id') as $item)
-                                                               {{ $item == $permission->id ? ' checked' : '' }}
-                                                           @endforeach
-                                                       @endif
-                                                    >
-                                                    <span class="form-check-label">{{ $permission->display_name }}</span>
-                                                </label>
-                                            </div>
-                                        @endforeach
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12"
+                                             v-for="permission in permissions" :key="permission.id">
+                                            <label class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox"
+                                                       v-model="form.permissions" :value="permission.name">
+                                                <span class="form-check-label align-middle">
+                                                    @{{ permission.display_name }}
+                                                    <i class="ti ti-info-circle" v-tooltip
+                                                       :title="permission.description"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+
+                                        <div class="invalid-feedback d-block" v-if="errors.permissions">
+                                            @{{ errors.permissions[0] }}
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-footer text-end">
-                                    <a href="{{ route('roles.index') }}" class="btn btn-link">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent mt-auto">
+                        <div class="btn-list">
+                            <button type="submit" class="btn btn-primary" :disabled="loading">
+                                <span class="spinner-border spinner-border-sm border-2 me-2" role="status"
+                                      aria-hidden="true" v-if="loading"></span>
+                                <span>{{ __('Save') }}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -91,3 +95,12 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        window.permissions = {{ Js::from($permissions) }};
+        window.model = {{ Js::from($model) }};
+        window.rolePermissions = {{ Js::from($rolePermissions) }};
+    </script>
+    @vite('resources/js/views/roles/edit.js')
+@endpush

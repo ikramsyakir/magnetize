@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Roles\CreateRoleRequest;
-use App\Http\Requests\UpdateRole;
+use App\Http\Requests\Roles\UpdateRoleRequest;
 use App\Models\Permissions\Permission;
 use App\Models\Roles\Role;
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class RoleController extends Controller
@@ -34,12 +32,13 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
 
-        return view('roles.create', compact('permissions'));
+        return view('roles.create', [
+            'permissions' => $permissions,
+        ]);
     }
 
     public function store(CreateRoleRequest $request): JsonResponse
     {
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
         $model = Role::create($validated);
@@ -51,7 +50,7 @@ class RoleController extends Controller
         flash()->success(__('messages.role_successfully_created'));
 
         return response()->json([
-            'status' => true, 'message' => 'Role created successfully', 'redirect' => route('roles.index')
+            'status' => true, 'message' => 'Role successfully created', 'redirect' => route('roles.index')
         ]);
     }
 
@@ -62,45 +61,43 @@ class RoleController extends Controller
         return view('roles.show', compact('model'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit($id): View
     {
-        $role = Role::findOrFail($id);
+        $model = Role::with('permissions')->findOrFail($id);
+
+        $rolePermissions = $model->permissions->pluck('name')->toArray();
 
         $permissions = Permission::all();
 
-        return view('roles.edit', compact('role', 'permissions'));
+        return view('roles.edit', [
+            'model' => $model,
+            'rolePermissions' => $rolePermissions,
+            'permissions' => $permissions
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return RedirectResponse|\Illuminate\Http\Response
-     */
-    public function update(UpdateRole $request, $id)
+    public function update(UpdateRoleRequest $request, $id): JsonResponse
     {
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $role = Role::findOrFail($id);
-        $role->name = $validated['name'];
-        $role->display_name = $validated['display_name'];
-        $role->description = $validated['description'];
-        $role->update();
+        $model = Role::query()->find($id);
 
-        if (isset($request->permissions) && $request->permissions) {
-            $role->syncPermissions($request->permissions);
+        if (!$model) {
+            return response()->json(['status' => false, 'message' => __('messages.role_not_found')],
+                Response::HTTP_NOT_FOUND);
         }
 
-        alert()->success('Success', 'Successfully updated!');
-        return redirect()->route('roles.index');
+        $model->update($validated);
+
+        if (!empty($validated['permissions'])) {
+            $model->syncPermissions($validated['permissions']);
+        }
+
+        flash()->success(__('messages.role_successfully_updated'));
+
+        return response()->json([
+            'status' => true, 'message' => 'Role successfully updated', 'redirect' => route('roles.index')
+        ]);
     }
 
     /**

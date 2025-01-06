@@ -70,4 +70,7 @@ return [
     'no_permission' => 'No Permission',
     'role_not_found' => 'Role Not Found',
     'edit_role' => 'Edit Role',
+    'permission_list' => 'Permission List',
+    'view_permission' => 'View Permission',
+    'no_role' => 'No Role',
 ];

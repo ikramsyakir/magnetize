@@ -19,7 +19,6 @@ class PermissionTable extends DataTableComponent
     {
         $this->setPrimaryKey('id')
             ->setAdditionalSelects('id')
-            ->setDefaultSort('created_at', 'desc')
             ->setSearchDisabled()
             ->setFilterLayoutSlideDown()
             ->setColumnSelectStatus(false)
@@ -29,7 +28,7 @@ class PermissionTable extends DataTableComponent
                 'class' => 'table card-table table-vcenter text-nowrap datatable'
             ])
             ->setTrAttributes(fn($row, $index) => ['default' => false, 'class' => 'align-middle'])
-            ->setPaginationWrapperAttributes(['class' => 'card-footer']);
+            ->setPaginationWrapperAttributes(['class' => 'card-footer p-3']);
     }
 
     public function columns(): array
@@ -52,15 +51,11 @@ class PermissionTable extends DataTableComponent
             Column::make(__('messages.updated_at'), "updated_at")
                 ->sortable()
                 ->format(fn($value) => $value ? $value->diffForHumans() : '-'),
-//            Column::make(__('messages.actions'))
-//                ->label(
-//                    fn($row, Column $column) => view('roles.columns.table-actions')->withRow($row)
-//                )
-//                ->hideIf(
-//                    !auth()->user()->can('read-roles') &&
-//                    !auth()->user()->can('edit-roles') &&
-//                    !auth()->user()->can('delete-roles')
-//                )
+            Column::make(__('messages.actions'))
+                ->label(
+                    fn($row, Column $column) => view('permissions.columns.table-actions')->withRow($row)
+                )
+                ->hideIf(!auth()->user()->can('read-permissions'))
         ];
     }
 
@@ -73,7 +68,7 @@ class PermissionTable extends DataTableComponent
                     'placeholder' => __('messages.search'),
                     'maxlength' => '25',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('name', 'like', '%'.$value.'%');
                 }),
             TextFilter::make(__('messages.display_name'), 'display_name')
@@ -82,7 +77,7 @@ class PermissionTable extends DataTableComponent
                     'placeholder' => __('messages.search'),
                     'maxlength' => '25',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('display_name', 'like', '%'.$value.'%');
                 }),
             TextFilter::make(__('messages.description'), 'description')
@@ -91,7 +86,7 @@ class PermissionTable extends DataTableComponent
                     'placeholder' => __('messages.search'),
                     'maxlength' => '50',
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     $builder->where('description', 'like', '%'.$value.'%');
                 }),
             DateRangeFilter::make(__('messages.created_at'), 'created_at')

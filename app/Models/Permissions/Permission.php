@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Models\Permission as BasePermission;
 
+/**
+ * @property string $display_name
+ * @property string $description
+ */
 class Permission extends BasePermission
 {
     use HasFactory;

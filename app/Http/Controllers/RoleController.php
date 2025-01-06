@@ -58,7 +58,9 @@ class RoleController extends Controller
     {
         $model = Role::query()->findOrFail($id);
 
-        return view('roles.show', compact('model'));
+        return view('roles.show', [
+            'model' => $model,
+        ]);
     }
 
     public function edit($id): View

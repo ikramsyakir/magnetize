@@ -70,4 +70,7 @@ return [
     'no_permission' => 'Tiada Kebenaran',
     'role_not_found' => 'Peranan Tidak Ditemui',
     'edit_role' => 'Kemaskini Peranan',
+    'permission_list' => 'Senarai Kebenaran',
+    'view_permission' => 'Lihat Kebenaran',
+    'no_role' => 'Tiada Peranan',
 ];

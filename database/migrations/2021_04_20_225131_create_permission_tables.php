@@ -25,6 +25,7 @@ class CreatePermissionTables extends Migration
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('display_name');
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
+            $table->string('group')->nullable();
             $table->longText('description')->nullable();
             $table->timestamps();
 

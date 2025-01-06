@@ -4,7 +4,9 @@
     --tblr-font-sans-serif: 'Rubik';
 }
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 [v-cloak] {
     display: none;
@@ -18,3 +20,83 @@ table thead th a, a:hover {
     text-decoration: none;
     color: #656d77;
 }
+
+.flatpickr-calendar {
+    background-color: var(--tblr-body-bg) !important;
+    color: var(--tblr-body-color) !important;
+    border-color: var(--tblr-border-color) !important;
+}
+
+.flatpickr-day {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day.today {
+    background-color: var(--tblr-primary) !important;
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day .inRange {
+    background-color: var(--tblr-primary) !important;
+}
+
+.flatpickr-day:hover {
+    background-color: var(--tblr-secondary) !important;
+}
+
+.flatpickr-month {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-weekday {
+    color: var(--tblr-body-color) !important;
+}
+
+.flatpickr-prev-month svg path {
+    fill: var(--tblr-body-color) !important;
+}
+
+.flatpickr-next-month svg path {
+    fill: var(--tblr-body-color) !important;
+}
+
+.flatpickr-day.startRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+
+.flatpickr-day.inRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+
+.flatpickr-day.endRange {
+    background: var(--tblr-primary) !important;
+    border-color: var(--tblr-primary) !important;
+    -webkit-box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+    box-shadow: -5px 0 0 var(--tblr-primary), 5px 0 0 var(--tblr-primary) !important;
+}
+
+/* Base styling for SweetAlert2 in dark mode */
+.swal2-popup {
+    background-color: var(--tblr-body-bg) !important; /* Tabler's dark background color */
+    color: var(--tblr-body-color) !important; /* Tabler's light text color */
+    border: 1px solid var(--tblr-border-dark-color) !important; /* Optional border color */
+}
+
+.swal2-title {
+    color: var(--tblr-body-color) !important; /* Light text color for titles */
+}
+
+.swal2-html-container {
+    color: var(--tblr-body-color) !important; /* Secondary text color */
+}
+
+.icon-alert-triangle-size {
+    font-size: 4.5rem !important;
+}
+

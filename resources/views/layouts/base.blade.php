@@ -1,7 +1,5 @@
-@php
-    use App\Utilities\Localization;
-    use Illuminate\Support\Js;
-@endphp
+@use(App\Utilities\Localization)
+@use(Illuminate\Support\Js)
 
 <!doctype html>
 <html lang="{{ App::getLocale() }}">
@@ -14,6 +12,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') - {{ config('app.name') }}</title>
+
+    @livewireStyles
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -38,6 +38,8 @@
 
 <!-- toast --->
 @include('partials.toasts')
+
+@livewireScriptConfig
 
 @stack('scripts')
 </body>

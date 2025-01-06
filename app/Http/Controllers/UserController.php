@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
-use App\Models\Role;
+use App\Models\Roles\Role;
 use App\Models\Users\User;
 use App\Notifications\UserChangedEmail;
 use Exception;

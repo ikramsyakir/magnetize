@@ -18,6 +18,8 @@ export default defineConfig({
                 'resources/js/views/profile/edit.js',
                 'resources/js/views/profile/update-password.js',
                 'resources/js/views/profile/delete-account.js',
+                'resources/js/views/roles/create.js',
+                'resources/js/views/roles/edit.js',
             ],
             refresh: true,
         }),

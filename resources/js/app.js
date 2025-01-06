@@ -8,3 +8,9 @@ import './bootstrap';
 import $ from "jquery";
 
 window.$ = $;
+
+import {Livewire} from '../../vendor/livewire/livewire/dist/livewire.esm';
+
+Livewire.start();
+
+import '../../vendor/rappasoft/laravel-livewire-tables/resources/imports/laravel-livewire-tables-all.js';

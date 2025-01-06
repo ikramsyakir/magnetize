@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Permissions\Permission;
+use App\Models\Roles\Role;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Str;
 
@@ -24,6 +26,42 @@ Breadcrumbs::for('profile.update-password', function ($trail) {
 Breadcrumbs::for('profile.delete-account', function ($trail) {
     $trail->parent('dashboard');
     $trail->push(__('Delete Account'), route('profile.delete-account'));
+});
+
+// Dashboard / Roles
+Breadcrumbs::for('roles.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('messages.roles'), route('roles.index'));
+});
+
+// Dashboard / Roles / Create Role
+Breadcrumbs::for('roles.create', function ($trail) {
+    $trail->parent('roles.index');
+    $trail->push(__('messages.create_role'), route('roles.create'));
+});
+
+// Dashboard / Roles / [Role Name]
+Breadcrumbs::for('roles.show', function ($trail, Role $model) {
+    $trail->parent('roles.index');
+    $trail->push($model->display_name, route('roles.show', $model->id));
+});
+
+// Dashboard / Roles / Edit Role
+Breadcrumbs::for('roles.edit', function ($trail, Role $model) {
+    $trail->parent('roles.show', $model);
+    $trail->push(__('messages.edit_role'), route('roles.edit', $model->id));
+});
+
+// Dashboard / Permissions
+Breadcrumbs::for('permissions.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('messages.permissions'), route('permissions.index'));
+});
+
+// Dashboard / Permissions / [Permission Name]
+Breadcrumbs::for('permissions.show', function ($trail, Permission $model) {
+    $trail->parent('permissions.index');
+    $trail->push($model->display_name, route('permissions.show', $model->id));
 });
 
 // Dashboard / Users
@@ -54,43 +92,6 @@ Breadcrumbs::for('edit_user', function ($trail, $user) {
     $trail->parent('view_user', $user);
     $trail->push('Edit', route('users.edit', $user->id));
 });
-
-// Dashboard / Roles
-Breadcrumbs::for('roles', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Roles', route('roles.index'));
-});
-
-// Dashboard / Roles / New Role
-Breadcrumbs::for('new_role', function ($trail) {
-    $trail->parent('roles');
-    $trail->push('New Role', route('roles.create'));
-});
-
-// Dashboard / Roles / Edit Role
-Breadcrumbs::for('edit_role', function ($trail, $role) {
-    $trail->parent('roles');
-    $trail->push('Edit Role', route('roles.edit', $role->id));
-});
-
-// Dashboard / Permissions
-Breadcrumbs::for('permissions', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Permissions', route('permissions.index'));
-});
-
-// Dashboard / Permissions / New Permission
-Breadcrumbs::for('new_permission', function ($trail) {
-    $trail->parent('permissions');
-    $trail->push('New Permission', route('permissions.create'));
-});
-
-// Dashboard / Permission / Edit Permission
-Breadcrumbs::for('edit_permission', function ($trail, $permission) {
-    $trail->parent('permissions');
-    $trail->push('Edit Permission', route('permissions.edit', $permission->id));
-});
-
 
 // Dashboard / Posts
 Breadcrumbs::for('posts', function ($trail) {

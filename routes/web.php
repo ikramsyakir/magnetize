@@ -46,10 +46,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Roles
-    Route::resource('roles', RoleController::class)->except('show');
+    Route::resource('roles', RoleController::class);
 
     // Permission
-    Route::resource('permissions', PermissionController::class)->except('show');
+    Route::resource('permissions', PermissionController::class)->only(['index', 'show']);
 
     // User
     Route::put('users/change-status/{id}', [UserController::class, 'changeStatus'])->name('users.change-status');

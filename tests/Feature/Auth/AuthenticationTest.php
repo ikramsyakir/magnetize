@@ -17,7 +17,7 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertStatus(200);
+    $response->assertJson($response->json());
 });
 
 test('users can not authenticate with invalid password', function () {

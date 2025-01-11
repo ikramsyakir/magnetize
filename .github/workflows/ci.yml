@@ -48,7 +48,7 @@ jobs:
       # Setup application
       - name: Setup Laravel
         run: |
-          cp .env.example .env
+          cp .env.ci .env
           php artisan key:generate
           php artisan migrate --seed --force
 

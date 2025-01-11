@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.4]
+        php: [8.3]
 
     steps:
       - name: Checkout code
@@ -29,3 +29,5 @@ jobs:
 
       - name: Commit linted files
         uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: PHP Linting (Pint)

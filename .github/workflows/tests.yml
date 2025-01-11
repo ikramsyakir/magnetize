@@ -11,7 +11,7 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:11.2
+        image: mariadb:11.6
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: magnetize_test

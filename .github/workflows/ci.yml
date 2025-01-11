@@ -41,14 +41,28 @@ jobs:
           extensions: mbstring, pdo_mysql, bcmath, intl
           coverage: none
 
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22 # Ensure this matches the version your project uses
+
       # Install composer dependencies
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
+      # Install Node.js dependencies
+      - name: Install Node.js dependencies
+        run: npm install
+
+      # Build assets using Vite
+      - name: Build assets
+        run: npm run build
+
       # Setup application
       - name: Setup Laravel
         run: |
-          cp .env.example .env
+          cp .env.ci .env
           php artisan key:generate
           php artisan migrate --seed --force
 

@@ -11,17 +11,13 @@ jobs:
 
     services:
       mariadb:
-        image: mariadb:11.6
+        image: mariadb:latest
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: magnetize_test
-          MYSQL_USER: magnetize
-          MYSQL_PASSWORD: password
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: magnetize_test
+          MARIADB_USER: magnetize
+          MARIADB_PASSWORD: password
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
         ports:
           - 3306:3306
 

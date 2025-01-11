@@ -58,4 +58,3 @@ Route::middleware(['auth'])->group(function () {
     // Post
     Route::resource('posts', PostController::class);
 });
-

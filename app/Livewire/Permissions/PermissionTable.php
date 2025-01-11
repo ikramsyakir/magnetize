@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Permissions;
 
+use App\Models\Permissions\Permission;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Permissions\Permission;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
@@ -25,9 +25,9 @@ class PermissionTable extends DataTableComponent
             ->setToolsAttributes(['class' => 'card-body border-bottom py-3', 'default-styling' => false])
             ->setTableAttributes([
                 'default' => false,
-                'class' => 'table card-table table-vcenter text-nowrap datatable'
+                'class' => 'table card-table table-vcenter text-nowrap datatable',
             ])
-            ->setTrAttributes(fn($row, $index) => ['default' => false, 'class' => 'align-middle'])
+            ->setTrAttributes(fn ($row, $index) => ['default' => false, 'class' => 'align-middle'])
             ->setPaginationWrapperAttributes(['class' => 'card-footer p-3']);
     }
 
@@ -35,7 +35,7 @@ class PermissionTable extends DataTableComponent
     {
         return [
             Column::make('#')->label(
-                fn($row, Column $column) => ++$this->index + ($this->paginators['page'] - 1) * $this->perPage
+                fn ($row, Column $column) => ++$this->index + ($this->paginators['page'] - 1) * $this->perPage
             ),
             Column::make(__('messages.name'), 'name')
                 ->sortable(),
@@ -43,19 +43,19 @@ class PermissionTable extends DataTableComponent
                 ->sortable(),
             Column::make(__('messages.description'), 'description')
                 ->sortable(),
-            Column::make(__('messages.created_at'), "created_at")
+            Column::make(__('messages.created_at'), 'created_at')
                 ->sortable()
                 ->format(
-                    fn($value, $row, Column $column) => $value->format('d/m/Y h:i A')
+                    fn ($value, $row, Column $column) => $value->format('d/m/Y h:i A')
                 ),
-            Column::make(__('messages.updated_at'), "updated_at")
+            Column::make(__('messages.updated_at'), 'updated_at')
                 ->sortable()
-                ->format(fn($value) => $value ? $value->diffForHumans() : '-'),
+                ->format(fn ($value) => $value ? $value->diffForHumans() : '-'),
             Column::make(__('messages.actions'))
                 ->label(
-                    fn($row, Column $column) => view('permissions.columns.table-actions')->withRow($row)
+                    fn ($row, Column $column) => view('permissions.columns.table-actions')->withRow($row)
                 )
-                ->hideIf(!auth()->user()->can('read-permissions'))
+                ->hideIf(! auth()->user()->can('read-permissions')),
         ];
     }
 

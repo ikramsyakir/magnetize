@@ -21,7 +21,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,'.$user->id,
             'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'avatar' => 'nullable|mimes:jpg,jpeg,png'
+            'avatar' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         $user->name = $validated['name'];
@@ -30,7 +30,7 @@ class UserController extends Controller
         if ($user->email != $validated['email']) {
             $user->email_verified_at = null;
             $user->email = $validated['email'];
-            $user->notify(new UserChangedEmail());
+            $user->notify(new UserChangedEmail);
         } else {
             $user->email = $validated['email'];
         }
@@ -55,7 +55,7 @@ class UserController extends Controller
         ];
 
         return $this->success([
-            'user' => $data
+            'user' => $data,
         ], 'User updated!');
     }
 }

@@ -13,7 +13,7 @@ class ThemeController extends Controller
     {
         $user = User::query()->find(auth()->user()->id);
 
-        if (!$user) {
+        if (! $user) {
             response()->json(['status' => false, 'message' => __('messages.user_not_found')], 404);
         }
 

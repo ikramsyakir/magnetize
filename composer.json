@@ -29,6 +29,7 @@
         "laradumps/laradumps": "^3.0",
         "laravel-lang/common": "^6.2",
         "laravel/breeze": "^2.0",
+        "laravel/pint": "^1.19",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^8.1",

@@ -51,7 +51,7 @@ class NewPasswordController extends Controller
                 'status' => true,
                 'title' => __('messages.success'),
                 'text' => __($status),
-                'redirect' => route('login')
+                'redirect' => route('login'),
             ]);
         }
 

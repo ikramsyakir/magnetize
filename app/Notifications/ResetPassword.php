@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
 class ResetPassword extends ResetPasswordNotification implements ShouldQueue
 {

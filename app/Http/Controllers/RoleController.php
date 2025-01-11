@@ -43,14 +43,14 @@ class RoleController extends Controller
 
         $model = Role::create($validated);
 
-        if (!empty($request->permissions)) {
+        if (! empty($request->permissions)) {
             $model->syncPermissions($validated['permissions']);
         }
 
         flash()->success(__('messages.role_successfully_created'));
 
         return response()->json([
-            'status' => true, 'message' => 'Role successfully created', 'redirect' => route('roles.index')
+            'status' => true, 'message' => 'Role successfully created', 'redirect' => route('roles.index'),
         ]);
     }
 
@@ -74,7 +74,7 @@ class RoleController extends Controller
         return view('roles.edit', [
             'model' => $model,
             'rolePermissions' => $rolePermissions,
-            'permissions' => $permissions
+            'permissions' => $permissions,
         ]);
     }
 
@@ -84,21 +84,21 @@ class RoleController extends Controller
 
         $model = Role::query()->find($id);
 
-        if (!$model) {
+        if (! $model) {
             return response()->json(['status' => false, 'message' => __('messages.role_not_found')],
                 Response::HTTP_NOT_FOUND);
         }
 
         $model->update($validated);
 
-        if (!empty($validated['permissions'])) {
+        if (! empty($validated['permissions'])) {
             $model->syncPermissions($validated['permissions']);
         }
 
         flash()->success(__('messages.role_successfully_updated'));
 
         return response()->json([
-            'status' => true, 'message' => 'Role successfully updated', 'redirect' => route('roles.index')
+            'status' => true, 'message' => 'Role successfully updated', 'redirect' => route('roles.index'),
         ]);
     }
 

@@ -6,8 +6,9 @@ use Illuminate\Support\Collection;
 
 class Theme
 {
-    const string LIGHT = "light";
-    const string DARK = "dark";
+    const string LIGHT = 'light';
+
+    const string DARK = 'dark';
 
     public static function themeType(): Collection
     {

@@ -18,10 +18,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'login' => 'required|string',
-            'password' => 'required|string|min:8'
+            'password' => 'required|string|min:8',
         ]);
 
-        if (!Auth::attempt($this->credentials($request))) {
+        if (! Auth::attempt($this->credentials($request))) {
             return $this->error('Credentials not match', 401);
         }
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         return $this->success([
             'user' => $user,
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
+            'token' => auth()->user()->createToken('API Token')->plainTextToken,
         ]);
     }
 
@@ -48,7 +48,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $user = User::create([
@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         $user->assignRole('normal-user');
 
-        $path = 'uploads/avatars/' . uniqid() . '-' . now()->timestamp . '.png';
+        $path = 'uploads/avatars/'.uniqid().'-'.now()->timestamp.'.png';
         $avatar = new Avatar(config('laravolt.avatar'));
         $avatar->create($user->name)->save($path, 100);
         $user->avatar = $path;
@@ -69,7 +69,7 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         return $this->success([
-            'user' => $user
+            'user' => $user,
         ], 'User created!');
     }
 
@@ -86,14 +86,13 @@ class AuthController extends Controller
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
 
         return [
-            'message' => 'Tokens Revoked'
+            'message' => 'Tokens Revoked',
         ];
     }
 
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     protected function credentials(Request $request)

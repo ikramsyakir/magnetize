@@ -30,7 +30,7 @@ class CreateUser extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'status' => ['required'],
             'roles' => ['required', 'array'],
-            'avatar' => ['nullable', 'mimes:jpg,jpeg,png']
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png'],
         ];
     }
 }

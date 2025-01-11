@@ -45,7 +45,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Ensure this matches the version your project uses
+          node-version: 22 # Ensure this matches the version your project uses
 
       # Install composer dependencies
       - name: Install dependencies

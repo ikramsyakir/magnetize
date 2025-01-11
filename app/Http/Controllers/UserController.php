@@ -45,6 +45,7 @@ class UserController extends Controller
     {
         $users = User::filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
         $roles = Role::pluck('display_name', 'name');
+
         return view('users.index', compact('users', 'roles'));
     }
 
@@ -56,13 +57,13 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
+
         return view('users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateUser $request
      * @return Application|RedirectResponse|Redirector
      */
     public function store(CreateUser $request)
@@ -70,7 +71,7 @@ class UserController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $user = new User();
+        $user = new User;
         $user->name = $validated['name'];
         $user->username = $validated['username'];
         $user->email = $validated['email'];
@@ -83,7 +84,7 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('uploads/avatars');
         } else {
-            $path = 'uploads/avatars/' . uniqid() . '-' . now()->timestamp . '.png';
+            $path = 'uploads/avatars/'.uniqid().'-'.now()->timestamp.'.png';
             $avatar = new Avatar(config('laravolt.avatar'));
             $avatar->create($user->name)->save($path, 100);
         }
@@ -99,13 +100,13 @@ class UserController extends Controller
         }
 
         alert()->success('Success', 'User created!');
+
         return redirect(route('users.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param $id
      * @return Application|Factory|View|RedirectResponse
      */
     public function show($id)
@@ -122,7 +123,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return Application|Factory|RedirectResponse|View
      */
     public function edit($id)
@@ -140,8 +141,6 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateUser $request
-     * @param $id
      * @return RedirectResponse
      */
     public function update(UpdateUser $request, $id)
@@ -161,7 +160,7 @@ class UserController extends Controller
         if ($user->email != $validated['email']) {
             $user->email_verified_at = null;
             $user->email = $validated['email'];
-            $user->notify(new UserChangedEmail());
+            $user->notify(new UserChangedEmail);
         } else {
             $user->email = $validated['email'];
         }
@@ -179,13 +178,13 @@ class UserController extends Controller
         $user->update();
 
         alert()->success('Success', 'User updated!');
+
         return redirect()->route('users.show', $user->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param $id
      * @return JsonResponse
      */
     public function destroy($id)
@@ -201,7 +200,7 @@ class UserController extends Controller
                 'data' => $user,
                 'message' => '',
             ];
-        } catch (Exception | Throwable $e) {
+        } catch (Exception|Throwable $e) {
             $response = [
                 'success' => false,
                 'error' => true,
@@ -216,7 +215,6 @@ class UserController extends Controller
     /**
      * Change status verify
      *
-     * @param $id
      * @return JsonResponse
      */
     public function changeStatus($id)
@@ -239,7 +237,7 @@ class UserController extends Controller
                 'data' => $user,
                 'message' => '',
             ];
-        } catch (Exception | Throwable $e) {
+        } catch (Exception|Throwable $e) {
             $response = [
                 'success' => false,
                 'error' => true,

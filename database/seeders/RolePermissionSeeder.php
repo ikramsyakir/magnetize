@@ -36,12 +36,12 @@ class RolePermissionSeeder extends Seeder
                 'name' => 'user',
                 'display_name' => 'User',
                 'description' => 'A normal user who can posts',
-            ]
+            ],
         ]);
 
         // Create role if not exist yet
         foreach ($roles as $role) {
-            if (!Role::where('name', $role['name'])->exists()) {
+            if (! Role::where('name', $role['name'])->exists()) {
                 Role::create([
                     'name' => $role['name'],
                     'display_name' => $role['display_name'],
@@ -60,7 +60,7 @@ class RolePermissionSeeder extends Seeder
                 ['name' => $permission['name']],
                 [
                     'display_name' => $permission['display_name'], 'group' => $permission['group'],
-                    'description' => $permission['description']
+                    'description' => $permission['description'],
                 ]
             );
         }

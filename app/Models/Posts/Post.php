@@ -14,23 +14,22 @@ class Post extends Model
     const STATUS = [
         'PUBLISHED' => 'PUBLISHED',
         'DRAFT' => 'DRAFT',
-        'PENDING' => 'PENDING'
+        'PENDING' => 'PENDING',
     ];
 
     const NOT_FEATURED = 0;
+
     const FEATURED = 1;
 
     /**
      * Return the sluggable configuration array for this model.
-     *
-     * @return array
      */
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 

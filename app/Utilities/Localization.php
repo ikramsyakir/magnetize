@@ -9,8 +9,8 @@ class Localization
     public static function get(): Collection
     {
         return collect([
-            "oops" => __('messages.oops'),
-            "page_expired_try_again" => __('messages.page_expired_try_again'),
+            'oops' => __('messages.oops'),
+            'page_expired_try_again' => __('messages.page_expired_try_again'),
         ]);
     }
 }

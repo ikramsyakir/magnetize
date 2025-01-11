@@ -15,12 +15,14 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles, HasApiTokens;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     const string STORAGE_AVATAR_PATH = 'app/public/uploads/avatars/';
+
     const string PUBLIC_AVATAR_PATH = 'uploads/avatars/';
 
     const string AVATAR_TYPE_INITIAL = 'initial';
+
     const string AVATAR_TYPE_UPLOADED = 'uploaded';
 
     protected $guarded = [];
@@ -48,7 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        $this->notify(new VerifyEmailNotification());
+        $this->notify(new VerifyEmailNotification);
     }
 
     public function sendPasswordResetNotification($token): void

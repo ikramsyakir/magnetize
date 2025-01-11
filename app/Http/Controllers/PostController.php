@@ -34,6 +34,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $posts = Post::with('user')->filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
+
         return view('posts.index', compact('posts'));
     }
 
@@ -58,7 +59,7 @@ class PostController extends Controller
         // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $post = new Post();
+        $post = new Post;
         $post->author_id = auth()->user()->id;
         $post->title = $validated['title'];
         $post->status = $validated['status'];
@@ -72,16 +73,16 @@ class PostController extends Controller
         $body = $validated['body'];
 
         if ($body) {
-            $dom = new \DomDocument();
+            $dom = new \DomDocument;
             $dom->loadHtml($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             $images = $dom->getElementsByTagName('img');
 
-            foreach($images as $img){
+            foreach ($images as $img) {
                 $data = $img->getAttribute('src');
-                list($type, $data) = explode(';', $data);
-                list($type, $data) = explode(',', $data);
+                [$type, $data] = explode(';', $data);
+                [$type, $data] = explode(',', $data);
                 $data = base64_decode($data);
-                $image_name = "/uploads/posts/" . $post->id . "/body/" . uniqid() . '-' . now()->timestamp . '.png';
+                $image_name = '/uploads/posts/'.$post->id.'/body/'.uniqid().'-'.now()->timestamp.'.png';
                 Storage::disk('local')->put($image_name, $data);
                 $img->removeAttribute('src');
                 $img->setAttribute('src', $image_name);
@@ -91,7 +92,7 @@ class PostController extends Controller
             $post->body = $body;
         }
 
-        $path = $request->hasFile('image') ? $request->file('image')->store('uploads/posts/' . $post->id) : null;
+        $path = $request->hasFile('image') ? $request->file('image')->store('uploads/posts/'.$post->id) : null;
 
         if ($path) {
             $post->image = $path;
@@ -100,32 +101,33 @@ class PostController extends Controller
         $post->update();
 
         alert()->success('Success', 'Post created!');
+
         return redirect(route('posts.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
+
         return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        if (!Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
+        if (! Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
             abort(403);
         }
 
@@ -135,15 +137,13 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdatePost $request
-     * @param $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(UpdatePost $request, $slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
 
-        if (!Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
+        if (! Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
             abort(403);
         }
 
@@ -164,16 +164,16 @@ class PostController extends Controller
         $body = $validated['body'];
 
         if ($body) {
-            $dom = new \DomDocument();
+            $dom = new \DomDocument;
             $dom->loadHtml($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             $images = $dom->getElementsByTagName('img');
 
-            foreach($images as $img){
+            foreach ($images as $img) {
                 $data = $img->getAttribute('src');
-                list($type, $data) = explode(';', $data);
-                list($type, $data) = explode(',', $data);
+                [$type, $data] = explode(';', $data);
+                [$type, $data] = explode(',', $data);
                 $data = base64_decode($data);
-                $image_name = "/uploads/posts/" . $post->id . "/body/" . uniqid() . '-' . now()->timestamp . '.png';
+                $image_name = '/uploads/posts/'.$post->id.'/body/'.uniqid().'-'.now()->timestamp.'.png';
                 Storage::disk('local')->put($image_name, $data);
                 $img->removeAttribute('src');
                 $img->setAttribute('src', $image_name);
@@ -183,7 +183,7 @@ class PostController extends Controller
             $post->body = $body;
         }
 
-        $path = $request->hasFile('image') ? $request->file('image')->store('uploads/posts/' . $post->id) : null;
+        $path = $request->hasFile('image') ? $request->file('image')->store('uploads/posts/'.$post->id) : null;
 
         if ($path) {
             $post->image = $path;
@@ -192,13 +192,14 @@ class PostController extends Controller
         $post->update();
 
         alert()->success('Success', 'Post created!');
+
         return redirect(route('posts.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
@@ -206,7 +207,7 @@ class PostController extends Controller
         try {
             $post = Post::findOrFail($id);
 
-            if (!Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
+            if (! Auth::user()->hasRole('admin') && $post->author_id != auth()->user()->id) {
                 abort(403);
             }
 
@@ -218,7 +219,7 @@ class PostController extends Controller
                 'data' => $post,
                 'message' => '',
             ];
-        } catch (Exception | Throwable $e) {
+        } catch (Exception|Throwable $e) {
             $response = [
                 'success' => false,
                 'error' => true,
@@ -229,5 +230,4 @@ class PostController extends Controller
 
         return response()->json($response);
     }
-
 }

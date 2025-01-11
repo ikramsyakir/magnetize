@@ -28,7 +28,7 @@ class UpdatePost extends FormRequest
             'body' => ['required'],
             'status' => ['required'],
             'featured' => ['nullable'],
-            'avatar' => ['nullable', 'mimes:jpg,jpeg,png']
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png'],
         ];
     }
 }

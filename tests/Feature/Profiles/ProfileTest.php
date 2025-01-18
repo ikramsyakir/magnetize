@@ -24,13 +24,12 @@ test('profile information can be updated', function () {
         ]);
 
     $response->assertSessionHasNoErrors();
-    $response->assertJson($response->json());
 
-    $user = $user->refresh();
-
-    $this->assertSame('Test User', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
+    expect($response->json())->toBeArray()
+        ->and($user->refresh())
+        ->name->toBe('Test User')
+        ->email->toBe('test@example.com')->toContain('@')
+        ->email_verified_at->toBeNull();
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
@@ -45,9 +44,10 @@ test('email verification status is unchanged when the email address is unchanged
         ]);
 
     $response->assertSessionHasNoErrors();
-    $response->assertJson($response->json());
 
-    $this->assertNotNull($user->refresh()->email_verified_at);
+    expect($response->json())->toBeArray()
+        ->and($user->refresh())
+        ->email_verified_at->not->toBeNull();
 });
 
 test('user can delete their account', function () {
@@ -60,10 +60,10 @@ test('user can delete their account', function () {
         ]);
 
     $response->assertSessionHasNoErrors();
-    $response->assertJson($response->json());
-
     $this->assertGuest();
-    $this->assertNull($user->fresh());
+
+    expect($response->json())->toBeArray()
+        ->and($user->refresh()->first())->toBeNull();
 });
 
 test('correct password must be provided to delete account', function () {
@@ -78,5 +78,5 @@ test('correct password must be provided to delete account', function () {
 
     $response->assertSessionHasErrors('password');
 
-    $this->assertNotNull($user->fresh());
+    expect($user->fresh())->not->toBeNull();
 });

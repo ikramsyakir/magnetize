@@ -16,9 +16,9 @@ test('password can be updated', function () {
         ]);
 
     $response->assertSessionHasNoErrors();
-    $response->assertJson($response->json());
 
-    $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+    expect($response->json())->toBeArray()
+        ->and(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
 
 test('correct password must be provided to update password', function () {

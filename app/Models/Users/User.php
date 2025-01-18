@@ -25,6 +25,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     const string AVATAR_TYPE_UPLOADED = 'uploaded';
 
+    const string VERIFIED = 'verified';
+
+    const string UNVERIFIED = 'unverified';
+
     protected $guarded = [];
 
     protected $hidden = [

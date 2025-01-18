@@ -9,3 +9,12 @@ if (! function_exists('set_active')) {
         return Str::startsWith(Route::currentRouteName(), $routeName) ? 'active' : null;
     }
 }
+
+if (! function_exists('to_options')) {
+    function to_options(array $array): array
+    {
+        return array_merge([
+            '' => __('messages.all'),
+        ], $array);
+    }
+}

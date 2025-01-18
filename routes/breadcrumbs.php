@@ -65,14 +65,14 @@ Breadcrumbs::for('permissions.show', function ($trail, Permission $model) {
 });
 
 // Dashboard / Users
-Breadcrumbs::for('users', function ($trail) {
+Breadcrumbs::for('users.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Users', route('users.index'));
+    $trail->push(__('messages.users'), route('users.index'));
 });
 
 // Dashboard / Users / Create
 Breadcrumbs::for('new_user', function ($trail) {
-    $trail->parent('users');
+    $trail->parent('users.index');
     $trail->push('New User', route('users.create'));
 });
 

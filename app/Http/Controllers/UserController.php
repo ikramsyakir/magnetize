@@ -22,31 +22,18 @@ use Throwable;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('permission:read-user')->only('index', 'changeStatus');
-        $this->middleware('permission:create-user')->only('create', 'store');
-        $this->middleware('permission:update-user')->only('edit', 'update');
-        $this->middleware('permission:user-profile')->only('show');
-        $this->middleware('permission:delete-user')->only('destroy');
+        $this->middleware('permission:browse-users')->only('index');
+        $this->middleware('permission:read-users')->only('show');
+        $this->middleware('permission:edit-users')->only('edit', 'update');
+        $this->middleware('permission:add-users')->only('create', 'store');
+        $this->middleware('permission:delete-users')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function index(Request $request)
+    public function index(): View
     {
-        $users = User::filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
-        $roles = Role::pluck('display_name', 'name');
-
-        return view('users.index', compact('users', 'roles'));
+        return view('users.index');
     }
 
     /**

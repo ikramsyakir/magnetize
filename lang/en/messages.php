@@ -73,4 +73,11 @@ return [
     'permission_list' => 'Permission List',
     'view_permission' => 'View Permission',
     'no_role' => 'No Role',
+    'user_list' => 'User List',
+    'create_user' => 'Create User',
+    'verified' => 'Verified',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'all' => 'All',
+    'unverified' => 'Unverified',
 ];

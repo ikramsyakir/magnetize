@@ -21,6 +21,6 @@ test('new users can register', function () {
         'password_confirmation' => 'password',
     ]);
 
-    $response->assertJson($response->json());
+    expect($response->json())->toBeArray();
     $this->assertAuthenticated();
 });

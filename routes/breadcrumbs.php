@@ -71,9 +71,9 @@ Breadcrumbs::for('users.index', function ($trail) {
 });
 
 // Dashboard / Users / Create
-Breadcrumbs::for('new_user', function ($trail) {
+Breadcrumbs::for('users.create', function ($trail) {
     $trail->parent('users.index');
-    $trail->push('New User', route('users.create'));
+    $trail->push(__('messages.create_user'), route('users.create'));
 });
 
 // Dashboard / View User

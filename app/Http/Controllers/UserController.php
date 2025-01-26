@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUser;
 use App\Http\Requests\UpdateUser;
+use App\Http\Requests\Users\CreateUserRequest;
 use App\Models\Roles\Role;
 use App\Models\Users\User;
 use App\Notifications\UserChangedEmail;
@@ -13,10 +13,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Laravolt\Avatar\Avatar;
+use Illuminate\Support\Str;
+use Laravolt\Avatar\Facade as Avatar;
 use Throwable;
 
 class UserController extends Controller
@@ -35,59 +35,54 @@ class UserController extends Controller
         return view('users.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function create()
+    public function create(): View
     {
         $roles = Role::all();
 
-        return view('users.create', compact('roles'));
+        return view('users.create', [
+            'roles' => $roles,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Application|RedirectResponse|Redirector
-     */
-    public function store(CreateUser $request)
+    public function store(CreateUserRequest $request): JsonResponse
     {
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $user = new User;
-        $user->name = $validated['name'];
-        $user->username = $validated['username'];
-        $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
+        $model = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        if (isset($validated['roles']) && $validated['roles']) {
-            $user->assignRole($validated['roles']);
+        if (! empty($validated['roles'])) {
+            $model->assignRole($validated['roles']);
         }
+
+        $fileName = Str::random(30).'.png';
 
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('uploads/avatars');
+            $request->file('avatar')->storeAs(User::STORAGE_AVATAR_PATH, $fileName);
+            $model->avatar_type = User::AVATAR_TYPE_UPLOADED;
         } else {
-            $path = 'uploads/avatars/'.uniqid().'-'.now()->timestamp.'.png';
-            $avatar = new Avatar(config('laravolt.avatar'));
-            $avatar->create($user->name)->save($path, 100);
+            Avatar::create($model->name)->save(storage_path(User::STORAGE_AVATAR_PATH.$fileName), 100);
+            $model->avatar_type = User::AVATAR_TYPE_INITIAL;
         }
 
-        $user->avatar = $path;
+        $model->avatar = $fileName;
 
-        $user->save();
+        $model->save();
 
-        if ($validated['status'] == 1) {
-            $user->markEmailAsVerified();
-        } else {
-            $user->sendEmailVerificationNotification();
+        if ($validated['verified'] == User::VERIFIED) {
+            $model->markEmailAsVerified();
         }
 
-        alert()->success('Success', 'User created!');
+        if ($validated['verified'] == User::UNVERIFIED) {
+            $model->sendEmailVerificationNotification();
+        }
 
-        return redirect(route('users.index'));
+        flash()->success(__('messages.user_successfully_created'));
+
+        return response()->json(['status' => true, 'redirect' => route('users.index')]);
     }
 
     /**

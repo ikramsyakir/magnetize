@@ -81,4 +81,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return array_combine($types, $types);
     }
+
+    public static function verifyTypes(): array
+    {
+        return [
+            self::VERIFIED => __('messages.verified'),
+            self::UNVERIFIED => __('messages.unverified'),
+        ];
+    }
 }

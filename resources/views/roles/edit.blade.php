@@ -17,7 +17,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="text-muted">
+                        <div class="card-subtitle">
                             {{ __('messages.create_a_new_role_to_manage_user_permissions') }}
                         </div>
                     </div>

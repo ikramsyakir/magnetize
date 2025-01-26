@@ -80,4 +80,9 @@ return [
     'no' => 'Tidak',
     'all' => 'Semua',
     'unverified' => 'Tidak Disahkan',
+    'create_user_desc' => 'Tambah pengguna baharu dengan menyediakan nama, emel, peranan, dan avatar mereka',
+    'please_select' => 'Sila pilih',
+    'avatar' => 'Avatar',
+    'avatar_type' => 'Jenis Avatar',
+    'user_successfully_created' => 'Pengguna berjaya dicipta',
 ];

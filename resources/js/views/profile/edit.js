@@ -10,7 +10,10 @@ createApp({
             avatar: '',
             avatar_type: window.user.avatar_type,
             avatarPreview: window.avatarPreview,
-            avatarTypes: window.avatarTypes,
+            avatarTypes: {
+                initial: window.avatarTypes.initial,
+                uploaded: window.avatarTypes.uploaded,
+            },
             defaultAvatar: window.defaultAvatar,
             errors: [],
             loading: false,

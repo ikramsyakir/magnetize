@@ -80,4 +80,9 @@ return [
     'no' => 'No',
     'all' => 'All',
     'unverified' => 'Unverified',
+    'create_user_desc' => 'Add a new user by providing their name, email, role, and avatar',
+    'please_select' => 'Please select',
+    'avatar' => 'Avatar',
+    'avatar_type' => 'Avatar Type',
+    'user_successfully_created' => 'User successfully created',
 ];

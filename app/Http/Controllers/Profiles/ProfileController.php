@@ -65,9 +65,9 @@ class ProfileController extends Controller
             }
         }
 
-        flash()->success(__('messages.profile_successfully_updated'));
-
         $user->update();
+
+        flash()->success(__('messages.profile_successfully_updated'));
 
         return response()->json(['status' => true, 'redirect' => route('profile.edit', absolute: false)]);
     }

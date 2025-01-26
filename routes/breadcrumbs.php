@@ -2,6 +2,7 @@
 
 use App\Models\Permissions\Permission;
 use App\Models\Roles\Role;
+use App\Models\Users\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Str;
 
@@ -76,15 +77,10 @@ Breadcrumbs::for('users.create', function ($trail) {
     $trail->push(__('messages.create_user'), route('users.create'));
 });
 
-// Dashboard / View User
-Breadcrumbs::for('view_user', function ($trail, $user) {
-    // If user can view all user, else user will see dashboard
-    if ($user->can('read-user')) {
-        $trail->parent('users');
-    } else {
-        $trail->parent('dashboard');
-    }
-    $trail->push($user->name, route('users.show', $user->id));
+// Dashboard / Users / [Name]
+Breadcrumbs::for('users.show', function ($trail, User $model) {
+    $trail->parent('users.index');
+    $trail->push($model->name, route('users.show', $model->id));
 });
 
 // Dashboard / Name / Edit

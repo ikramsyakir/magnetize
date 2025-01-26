@@ -85,4 +85,5 @@ return [
     'avatar' => 'Avatar',
     'avatar_type' => 'Jenis Avatar',
     'user_successfully_created' => 'Pengguna berjaya dicipta',
+    'view_user' => 'Lihat Pengguna',
 ];

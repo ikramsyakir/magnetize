@@ -85,20 +85,13 @@ class UserController extends Controller
         return response()->json(['status' => true, 'redirect' => route('users.index')]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return Application|Factory|View|RedirectResponse
-     */
-    public function show($id)
+    public function show($id): View
     {
-        $user = User::findOrFail($id);
+        $model = User::query()->findOrFail($id);
 
-        if (auth()->user()->cannot('read-user') && ($user->id != auth()->user()->id)) {
-            abort(403);
-        }
-
-        return view('users.show', compact('user'));
+        return view('users.show', [
+            'model' => $model,
+        ]);
     }
 
     /**

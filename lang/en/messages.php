@@ -85,4 +85,5 @@ return [
     'avatar' => 'Avatar',
     'avatar_type' => 'Avatar Type',
     'user_successfully_created' => 'User successfully created',
+    'view_user' => 'View User',
 ];

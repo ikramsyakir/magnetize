@@ -139,6 +139,28 @@ class UserTable extends DataTableComponent
         ];
     }
 
+    public function destroy($id): void
+    {
+        if (auth()->user()->cannot('delete-users')) {
+            flash()->error(__('messages.user_does_not_have_the_right_permissions'));
+            $this->redirectRoute('dashboard');
+        }
+
+        $model = User::query()->find($id);
+
+        if (! $model) {
+            flash()->error(__('messages.user_not_found'));
+
+            $this->redirectRoute('users.index');
+        }
+
+        $model->delete();
+
+        flash()->success(__('messages.user_successfully_deleted'));
+
+        $this->redirectRoute('users.index');
+    }
+
     public function customView(): string
     {
         return 'partials.livewire-delete-confirmation';

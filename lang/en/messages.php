@@ -85,6 +85,7 @@ return [
     'avatar_type' => 'Avatar Type',
     'user_successfully_created' => 'User successfully created',
     'user_successfully_updated' => 'User successfully updated',
+    'user_successfully_deleted' => 'User successfully deleted',
     'view_user' => 'View User',
     'edit_user' => 'Edit User',
     'add_user_desc' => 'Easily add a new user to the system',

@@ -165,6 +165,7 @@
         window.roles = {{ Js::from($roles) }};
         window.avatarTypes = {{ Js::from(User::avatarTypes()) }};
         window.avatarPreview = "{{ $model->getAvatarPath() }}";
+        window.defaultAvatar = "{{ Avatar::create($model->name)->toBase64() }}";
         window.verifyTypes = {{ Js::from(User::verifyTypes()) }};
     </script>
     @vite('resources/js/views/users/edit.js')

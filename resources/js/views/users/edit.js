@@ -26,7 +26,7 @@ createApp({
                 uploaded: window.avatarTypes.uploaded,
             },
             avatarPreview: window.avatarPreview,
-            defaultAvatar: window.avatarPreview,
+            defaultAvatar: window.defaultAvatar,
             show_password: false,
             show_password_confirmation: false,
             verifyTypes: window.verifyTypes,
@@ -40,6 +40,7 @@ createApp({
             this.form.email = this.model.email;
             this.form.verified = this.model.verified;
             this.form.roles = window.currentRoles;
+            this.form.avatar_type = this.model.avatar_type;
         }
     },
     computed: {
@@ -116,7 +117,7 @@ createApp({
             this.$refs.avatarFile.value = null;
             this.form.avatar_type = this.avatarTypes.initial;
             this.form.avatar = '';
-            this.avatarPreview = this.defaultAvatar;
+            this.avatarPreview = this.base64ToUrl(this.defaultAvatar);
         },
         base64ToUrl(base64) {
             const [header, base64Data] = base64.split(',');

@@ -85,6 +85,7 @@ return [
     'avatar_type' => 'Jenis Avatar',
     'user_successfully_created' => 'Pengguna berjaya dicipta',
     'user_successfully_updated' => 'Pengguna berjaya dikemaskini',
+    'user_successfully_deleted' => 'Pengguna berjaya dipadam',
     'view_user' => 'Lihat Pengguna',
     'edit_user' => 'Kemaskini Pengguna',
     'add_user_desc' => 'Tambah pengguna baharu ke dalam sistem dengan mudah',

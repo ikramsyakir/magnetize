@@ -5,10 +5,10 @@ namespace App\Models\Users;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail as VerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -25,6 +25,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     const string AVATAR_TYPE_UPLOADED = 'uploaded';
 
+    const string VERIFIED = 'verified';
+
+    const string UNVERIFIED = 'unverified';
+
     protected $guarded = [];
 
     protected $hidden = [
@@ -34,6 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $appends = [
+        'verified',
     ];
 
     protected static function booted(): void
@@ -48,6 +56,19 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    protected function verified(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if ($this->hasVerifiedEmail()) {
+                    return self::VERIFIED;
+                }
+
+                return self::UNVERIFIED;
+            },
+        );
+    }
+
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailNotification);
@@ -56,11 +77,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
-    }
-
-    public function getRoleDisplayNames(): Collection
-    {
-        return $this->roles->pluck('display_name');
     }
 
     public function getAvatarPath(): string
@@ -76,5 +92,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
 
         return array_combine($types, $types);
+    }
+
+    public static function verifyTypes(): array
+    {
+        return [
+            self::VERIFIED => __('messages.verified'),
+            self::UNVERIFIED => __('messages.unverified'),
+        ];
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Models\Permissions\Permission;
 use App\Models\Roles\Role;
+use App\Models\Users\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Str;
 
@@ -65,32 +66,27 @@ Breadcrumbs::for('permissions.show', function ($trail, Permission $model) {
 });
 
 // Dashboard / Users
-Breadcrumbs::for('users', function ($trail) {
+Breadcrumbs::for('users.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Users', route('users.index'));
+    $trail->push(__('messages.users'), route('users.index'));
 });
 
 // Dashboard / Users / Create
-Breadcrumbs::for('new_user', function ($trail) {
-    $trail->parent('users');
-    $trail->push('New User', route('users.create'));
+Breadcrumbs::for('users.create', function ($trail) {
+    $trail->parent('users.index');
+    $trail->push(__('messages.create_user'), route('users.create'));
 });
 
-// Dashboard / View User
-Breadcrumbs::for('view_user', function ($trail, $user) {
-    // If user can view all user, else user will see dashboard
-    if ($user->can('read-user')) {
-        $trail->parent('users');
-    } else {
-        $trail->parent('dashboard');
-    }
-    $trail->push($user->name, route('users.show', $user->id));
+// Dashboard / Users / [Name]
+Breadcrumbs::for('users.show', function ($trail, User $model) {
+    $trail->parent('users.index');
+    $trail->push($model->name, route('users.show', $model->id));
 });
 
-// Dashboard / Name / Edit
-Breadcrumbs::for('edit_user', function ($trail, $user) {
-    $trail->parent('view_user', $user);
-    $trail->push('Edit', route('users.edit', $user->id));
+// Dashboard / Users / [Name] > Edit User
+Breadcrumbs::for('users.edit', function ($trail, User $user) {
+    $trail->parent('users.show', $user);
+    $trail->push(__('messages.edit_user'), route('users.edit', $user->id));
 });
 
 // Dashboard / Posts

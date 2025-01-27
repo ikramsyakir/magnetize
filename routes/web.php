@@ -52,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('permissions', PermissionController::class)->only(['index', 'show']);
 
     // User
-    Route::put('users/change-status/{id}', [UserController::class, 'changeStatus'])->name('users.change-status');
     Route::resource('users', UserController::class);
 
     // Post

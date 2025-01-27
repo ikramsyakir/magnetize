@@ -2,250 +2,166 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUser;
-use App\Http\Requests\UpdateUser;
+use App\Http\Requests\Users\CreateUserRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\Roles\Role;
 use App\Models\Users\User;
-use App\Notifications\UserChangedEmail;
-use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Laravolt\Avatar\Avatar;
-use Throwable;
+use Illuminate\Support\Str;
+use Laravolt\Avatar\Facade as Avatar;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('permission:read-user')->only('index', 'changeStatus');
-        $this->middleware('permission:create-user')->only('create', 'store');
-        $this->middleware('permission:update-user')->only('edit', 'update');
-        $this->middleware('permission:user-profile')->only('show');
-        $this->middleware('permission:delete-user')->only('destroy');
+        $this->middleware('permission:browse-users')->only('index');
+        $this->middleware('permission:read-users')->only('show');
+        $this->middleware('permission:edit-users')->only('edit', 'update');
+        $this->middleware('permission:add-users')->only('create', 'store');
+        $this->middleware('permission:delete-users')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function index(Request $request)
+    public function index(): View
     {
-        $users = User::filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
-        $roles = Role::pluck('display_name', 'name');
-
-        return view('users.index', compact('users', 'roles'));
+        return view('users.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function create()
+    public function create(): View
     {
         $roles = Role::all();
 
-        return view('users.create', compact('roles'));
+        return view('users.create', [
+            'roles' => $roles,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Application|RedirectResponse|Redirector
-     */
-    public function store(CreateUser $request)
+    public function store(CreateUserRequest $request): JsonResponse
     {
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $user = new User;
-        $user->name = $validated['name'];
-        $user->username = $validated['username'];
-        $user->email = $validated['email'];
-        $user->password = Hash::make($validated['password']);
+        $model = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-        if (isset($validated['roles']) && $validated['roles']) {
-            $user->assignRole($validated['roles']);
+        if (! empty($validated['roles'])) {
+            $model->assignRole($validated['roles']);
         }
+
+        $fileName = Str::random(30);
+        $avatarPath = User::STORAGE_AVATAR_PATH;
 
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('uploads/avatars');
+            $fileExtension = $request->file('avatar')->extension();
+            $fileName .= '.'.$fileExtension;
+            $request->file('avatar')->storeAs($avatarPath, $fileName);
+            $model->avatar_type = User::AVATAR_TYPE_UPLOADED;
         } else {
-            $path = 'uploads/avatars/'.uniqid().'-'.now()->timestamp.'.png';
-            $avatar = new Avatar(config('laravolt.avatar'));
-            $avatar->create($user->name)->save($path, 100);
+            $fileName .= '.png';
+            Avatar::create($model->name)->save(storage_path($avatarPath.$fileName), 100);
+            $model->avatar_type = User::AVATAR_TYPE_INITIAL;
         }
 
-        $user->avatar = $path;
+        $model->avatar = $fileName;
 
-        $user->save();
+        $model->save();
 
-        if ($validated['status'] == 1) {
-            $user->markEmailAsVerified();
-        } else {
-            $user->sendEmailVerificationNotification();
+        if ($validated['verified'] == User::VERIFIED) {
+            $model->markEmailAsVerified();
         }
 
-        alert()->success('Success', 'User created!');
+        if ($validated['verified'] == User::UNVERIFIED) {
+            $model->sendEmailVerificationNotification();
+        }
 
-        return redirect(route('users.index'));
+        flash()->success(__('messages.user_successfully_created'));
+
+        return response()->json(['status' => true, 'redirect' => route('users.index')]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return Application|Factory|View|RedirectResponse
-     */
-    public function show($id)
+    public function show($id): View
     {
-        $user = User::findOrFail($id);
+        $model = User::query()->findOrFail($id);
 
-        if (auth()->user()->cannot('read-user') && ($user->id != auth()->user()->id)) {
-            abort(403);
-        }
-
-        return view('users.show', compact('user'));
+        return view('users.show', [
+            'model' => $model,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Application|Factory|RedirectResponse|View
-     */
-    public function edit($id)
+    public function edit($id): View
     {
-        $user = User::findOrFail($id);
+        $model = User::query()->findOrFail($id);
+
+        $currentRoles = $model->roles->pluck('name')->toArray();
+
         $roles = Role::all();
 
-        if (auth()->user()->cannot('read-user') && ($user->id != auth()->user()->id)) {
-            abort(403);
-        }
-
-        return view('users.edit', compact('user', 'roles'));
+        return view('users.edit', [
+            'model' => $model,
+            'currentRoles' => $currentRoles,
+            'roles' => $roles,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return RedirectResponse
-     */
-    public function update(UpdateUser $request, $id)
+    public function update(UpdateUserRequest $request, $id): JsonResponse
     {
-        $user = User::findOrFail($id);
-
-        if (auth()->user()->cannot('read-user') && ($user->id != auth()->user()->id)) {
-            abort(403);
-        }
-
-        // Retrieve the validated input data...
         $validated = $request->validated();
 
-        $user->name = $validated['name'];
-        $user->username = $validated['username'];
+        $model = User::query()->find($id);
 
-        if ($user->email != $validated['email']) {
-            $user->email_verified_at = null;
-            $user->email = $validated['email'];
-            $user->notify(new UserChangedEmail);
-        } else {
-            $user->email = $validated['email'];
+        if (! $model) {
+            return response()->json(['status' => false, 'message' => __('messages.user_not_found')],
+                Response::HTTP_NOT_FOUND);
+        }
+
+        $model->name = $validated['name'];
+        $model->email = $validated['email'];
+
+        if (! empty($validated['roles'])) {
+            $model->assignRole($validated['roles']);
+        }
+
+        $fileName = Str::random(30);
+        $avatarPath = User::STORAGE_AVATAR_PATH;
+        $currentAvatar = $avatarPath.$model->avatar;
+
+        // Delete the existing avatar file if it exists
+        if (Storage::exists($currentAvatar)) {
+            Storage::delete($currentAvatar);
         }
 
         if ($request->hasFile('avatar')) {
-            Storage::delete($user->avatar);
-            $path = $request->file('avatar')->store('uploads/avatars');
-            $user->avatar = $path;
+            // Store the uploaded avatar
+            $fileExtension = $request->file('avatar')->extension();
+            $fileName .= '.'.$fileExtension;
+            $request->file('avatar')->storeAs($avatarPath, $fileName);
+            $model->avatar_type = User::AVATAR_TYPE_UPLOADED;
+        } else {
+            // Generate and save an avatar using the user's name
+            $fileName .= '.png';
+            Avatar::create($model->name)->save(storage_path($avatarPath.$fileName), 100);
+            $model->avatar_type = User::AVATAR_TYPE_INITIAL;
         }
 
-        if (isset($validated['roles']) && $validated['roles']) {
-            $user->syncRoles($validated['roles']);
+        $model->avatar = $fileName;
+
+        $model->save();
+
+        if ($validated['verified'] == User::VERIFIED) {
+            $model->markEmailAsVerified();
         }
 
-        $user->update();
-
-        alert()->success('Success', 'User updated!');
-
-        return redirect()->route('users.show', $user->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return JsonResponse
-     */
-    public function destroy($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            $user->delete();
-            Storage::delete($user->avatar);
-
-            $response = [
-                'success' => true,
-                'error' => false,
-                'data' => $user,
-                'message' => '',
-            ];
-        } catch (Exception|Throwable $e) {
-            $response = [
-                'success' => false,
-                'error' => true,
-                'data' => null,
-                'message' => $e->getMessage(),
-            ];
+        if ($validated['verified'] == User::UNVERIFIED) {
+            $model->sendEmailVerificationNotification();
         }
 
-        return response()->json($response);
-    }
+        flash()->success(__('messages.user_successfully_updated'));
 
-    /**
-     * Change status verify
-     *
-     * @return JsonResponse
-     */
-    public function changeStatus($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-
-            if ($user->hasVerifiedEmail()) {
-                $user->email_verified_at = null;
-                $user->sendEmailVerificationNotification();
-            } else {
-                $user->markEmailAsVerified();
-            }
-
-            $user->update();
-
-            $response = [
-                'success' => true,
-                'error' => false,
-                'data' => $user,
-                'message' => '',
-            ];
-        } catch (Exception|Throwable $e) {
-            $response = [
-                'success' => false,
-                'error' => true,
-                'data' => null,
-                'message' => $e->getMessage(),
-            ];
-        }
-
-        return response()->json($response);
+        return response()->json(['status' => true, 'redirect' => route('users.index')]);
     }
 }

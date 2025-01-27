@@ -1,49 +1,73 @@
 @extends('layouts.app')
 
-@section('title', 'Profile')
+@section('title', __('messages.view_user'))
 
-@section('breadcrumbs', Breadcrumbs::render('view_user', $user))
+@section('page-title', __('messages.view_user'))
 
-@can('update-user')
-    @section('button')
-        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
-    @endsection
-@endcan
+@section('breadcrumbs', Breadcrumbs::render('users.show', $model))
 
 @section('main-content')
     <div class="page-body">
         <div class="container-xl">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-cover card-cover-blurred text-center" style="background-image: url({{ asset('images/photos/profile_wallpaper.jpg') }})">
-                        <span class="avatar avatar-xl avatar-thumb avatar-rounded" style="background-image: url({{ $user->avatar ? asset($user->avatar) : Avatar::create($user->name)->toBase64() }})"></span>
+                    <div class="card-header">
+                        <h3 class="card-title">{{ $model->name }}</h3>
                     </div>
-                    <div class="card-body text-center">
-                        <div class="card-title mb-1">{{ $user->name }}</div>
-                        <div class="text-muted">{{ $user->roles->isNotEmpty() ? 'Role: ' . $user->getRoleDisplayNames()->implode(',') : 'No Role' }}</div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-12 mt-3">
-                <div class="card">
                     <div class="card-body">
-                        <div class="card-title">User info</div>
-                        <div class="mb-2">
-                            <i class="fas fa-user-circle"></i>
-                            Username: <strong>{{ $user->username }}</strong>
-                        </div>
-                        <div class="mb-2">
-                            <i class="fas fa-envelope"></i>
-                            Email: <strong>{{ $user->email }}</strong>
-                        </div>
-                        <div class="mb-2">
-                            <i class="fas fa-clock"></i>
-                            Created at: <strong>{{ $user->created_at->diffForHumans() }}</strong>
-                        </div>
-                        <div>
-                            <i class="fas fa-history"></i>
-                            Updated at: <strong>{{ $user->updated_at->diffForHumans() }}</strong>
+                        <div class="table-responsive mt-3">
+                            <table
+                                class="table table-bordered table-striped table-vcenter text-nowrap datatable">
+                                <tbody>
+                                <tr>
+                                    <td class="fw-semibold text-end w-25">{{ __('messages.id') }}</td>
+                                    <td class="w-75">{{ $model->id }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.name') }}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center py-1">
+                                            <span class="avatar avatar-xl rounded me-3"
+                                                  style="background-image: url({{ $model->getAvatarPath() }})"></span>
+                                            <div class="fw-medium flex-fill">{{ $model->name }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.email') }}</td>
+                                    <td>{{ $model->email }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.verified') }}</td>
+                                    <td class="text-wrap align-middle">
+                                        @include('users.columns.email_verified_at', ['row' => $model])
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.roles') }}</td>
+                                    <td class="text-wrap align-middle">
+                                        @forelse ($model->roles as $role)
+                                            <span class="badge bg-blue text-blue-fg me-1 mb-1 mt-1 fs-12 pe-auto"
+                                                  data-bs-toggle="tooltip" data-bs-placement="top"
+                                                  title="{{ $role->description }}">
+                                                {{ $role->display_name }}
+                                            </span>
+                                        @empty
+                                            {{ __('messages.no_role') }}
+                                        @endforelse
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.created_at') }}</td>
+                                    <td>{{ $model->created_at->format('d/m/Y h:i A') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold text-end">{{ __('messages.updated_at') }}</td>
+                                    <td>{{ $model->updated_at->diffForHumans() }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

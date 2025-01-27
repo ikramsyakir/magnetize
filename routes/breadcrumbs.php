@@ -83,10 +83,10 @@ Breadcrumbs::for('users.show', function ($trail, User $model) {
     $trail->push($model->name, route('users.show', $model->id));
 });
 
-// Dashboard / Name / Edit
-Breadcrumbs::for('edit_user', function ($trail, $user) {
-    $trail->parent('view_user', $user);
-    $trail->push('Edit', route('users.edit', $user->id));
+// Dashboard / Users / [Name] > Edit User
+Breadcrumbs::for('users.edit', function ($trail, User $user) {
+    $trail->parent('users.show', $user);
+    $trail->push(__('messages.edit_user'), route('users.edit', $user->id));
 });
 
 // Dashboard / Posts

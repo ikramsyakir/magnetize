@@ -3,7 +3,7 @@ import {route} from 'ziggy-js';
 import tooltip from '../../directives/tooltip.js';
 
 createApp({
-    name: "CreateUserForm",
+    name: "EditUserForm",
     directives: {
         tooltip: tooltip,
     },
@@ -19,6 +19,7 @@ createApp({
                 avatar: '',
                 avatar_type: window.avatarTypes.initial,
             },
+            model: window.model,
             roles: window.roles,
             avatarTypes: {
                 initial: window.avatarTypes.initial,
@@ -31,6 +32,14 @@ createApp({
             verifyTypes: window.verifyTypes,
             errors: [],
             loading: false,
+        }
+    },
+    mounted() {
+        if (this.model) {
+            this.form.name = this.model.name;
+            this.form.email = this.model.email;
+            this.form.verified = this.model.verified;
+            this.form.roles = window.currentRoles;
         }
     },
     computed: {
@@ -60,6 +69,7 @@ createApp({
             this.loading = true;
 
             let data = new FormData();
+            data.append('_method', document.getElementsByName("_method")[0].value)
             data.append('name', this.form.name);
             data.append('email', this.form.email);
             data.append('verified', this.form.verified);
@@ -69,7 +79,7 @@ createApp({
             data.append('avatar', this.form.avatar);
             data.append('avatar_type', this.form.avatar_type);
 
-            await axios.post(route('users.store'), data).then(response => {
+            await axios.post(route('users.update', {user: this.model.id}), data).then(response => {
                 this.errors = []; // Clear errors
                 this.loading = false; // Stop loading
 
@@ -81,6 +91,12 @@ createApp({
                 console.log(error.response);
                 if (error.response.status === 422) {
                     this.errors = error.response.data.errors;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: window.messages.oops,
+                        text: error.response.data.message,
+                    });
                 }
                 this.loading = false; // Stop loading
             });
@@ -89,6 +105,7 @@ createApp({
             const selectedFile = this.$refs.avatarFile.files[0];
 
             if (selectedFile) {
+                console.log(selectedFile);
                 // Set file and generate preview
                 this.form.avatar = selectedFile;
                 this.form.avatar_type = this.avatarTypes.uploaded;

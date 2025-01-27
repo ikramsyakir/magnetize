@@ -1,117 +1,155 @@
+@use(Illuminate\Support\Js)
+@use(App\Models\Users\User)
+
 @extends('layouts.app')
 
-@section('title', 'Edit User')
+@section('title', __('messages.edit_user'))
 
-@section('breadcrumbs', Breadcrumbs::render('edit_user', $user))
+@section('page-title', __('messages.edit_user'))
+
+@section('breadcrumbs', Breadcrumbs::render('users.edit', $model))
 
 @section('main-content')
-    <div class="page-body">
+    <div id="app" v-cloak class="page-body">
         <div class="container-xl">
-            <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
+            <form autocomplete="off" @submit.prevent="submitForm">
                 @csrf
                 @method('PUT')
 
-                <div class="row">
-                    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Edit User</h3>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-subtitle">{{ __('messages.edit_user_desc') }}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center mt-3 mb-5">
+                            <div class="col-auto">
+                                <span class="avatar avatar-xl"
+                                      :style="{ backgroundImage: `url(${avatarPreview})` }"></span>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group mb-3 ">
-                                    <label class="form-label required">Name</label>
+                            <div class="col-auto">
+                                <button type="button" class="btn" onclick="$('#avatar').trigger('click');">
+                                    {{ __('messages.change_avatar') }}
+                                </button>
+                                <input type="file" name="avatar" id="avatar" class="d-none"
+                                       @change="handleAvatarChange" ref="avatarFile" accept="image/*">
+                            </div>
+                            <div class="col-auto" v-if="form.avatar_type == avatarTypes.uploaded">
+                                <button type="button" class="btn btn-ghost-danger" @click="deleteAvatar">
+                                    {{ __('messages.delete_avatar') }}
+                                </button>
+                            </div>
+                            <div class="invalid-feedback d-block mt-3" v-if="errors.avatar">
+                                @{{ errors.avatar[0] }}
+                            </div>
+                        </div>
 
-                                    <input id="name" type="text"
-                                           class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ $user->name }}" placeholder="John Doe" required
-                                           autocomplete="name">
-
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label required">{{ __('messages.name') }}</label>
+                                    <input type="text" id="name" v-model="form.name" class="form-control"
+                                           :class="{ 'is-invalid': errors.name }">
+                                    <div class="invalid-feedback" v-if="errors.name">@{{ errors.name[0] }}</div>
                                 </div>
-                                <div class="form-group mb-3 ">
-                                    <label class="form-label required">Username</label>
 
-                                    <input id="username" type="text"
-                                           class="form-control @error('username') is-invalid @enderror" name="username"
-                                           value="{{ $user->username }}" placeholder="johndoe" required
-                                           autocomplete="username">
-
-                                    @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="mb-3">
+                                    <label for="email" class="form-label required">{{ __('messages.email') }}</label>
+                                    <input type="email" id="email" v-model="form.email" class="form-control"
+                                           :class="{ 'is-invalid': errors.email }">
+                                    <div class="invalid-feedback" v-if="errors.email">
+                                        @{{ errors.email[0] }}
+                                    </div>
                                 </div>
-                                <div class="form-group mb-3 ">
-                                    <label class="form-label required">Email address</label>
 
-                                    <input id="email" type="email"
-                                           class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ $user->email }}" placeholder="johndoe@email.com" required
-                                           autocomplete="email">
-
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="mb-3">
+                                    <label for="verified" class="form-label required">
+                                        {{ __('messages.verified') }}
+                                    </label>
+                                    <select id="verified" class="form-select" v-model="form.verified"
+                                            :class="{ 'is-invalid': errors.verified }">
+                                        <option disabled value="">{{ __('messages.please_select') }}</option>
+                                        <option v-for="(item, index) in verifyTypes" :value="index">
+                                            @{{ item }}
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback" v-if="errors.verified">
+                                        @{{ errors.verified[0] }}
+                                    </div>
                                 </div>
-                                @can('read-user')
-                                    <div class="form-group mb-3">
-                                        <div class="form-label required">Roles</div>
-                                        <div>
-                                            @foreach($roles as $role)
-                                                <label class="form-check form-check-inline">
-                                                    <input class="form-check-input @error('roles') is-invalid @enderror"
-                                                           type="checkbox" name="roles[]"
-                                                           value="{{ $role->name }}" {{ $user->roles->contains('name', $role->name) ? 'checked' : '' }}>
-                                                    <span class="form-check-label">{{ $role->display_name }}</span>
+
+                                <div class="mb-3">
+                                    <label class="form-label required">{{ __('messages.roles') }}</label>
+                                    <div class="row mt-3">
+                                        <div class="col-12" v-for="role in roles" :key="role.id">
+                                            <div class="form-check mb-3">
+                                                <input :id="role.name" class="form-check-input" type="checkbox"
+                                                       :class="{ 'is-invalid': errors.roles }"
+                                                       v-model="form.roles" :value="role.name">
+                                                <label class="form-check-label align-middle" :for="role.name">
+                                                    @{{ role.display_name }}
+                                                    <i class="ti ti-info-circle" v-tooltip
+                                                       data-bs-placement="right" :title="role.description"></i>
                                                 </label>
-                                            @endforeach
-
-                                            @error('roles')
-                                            <div class="invalid-feedback d-block">
-                                                <strong>{{ $message }}</strong>
                                             </div>
-                                            @enderror
+                                        </div>
+                                        <div class="invalid-feedback d-block" v-if="errors.roles">
+                                            @{{ errors.roles[0] }}
                                         </div>
                                     </div>
-                                @endcan
-                                <div class="form-footer text-end">
-                                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-link">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label required">
+                                        {{ __('messages.password') }}
+                                    </label>
+                                    <div class="input-group input-group-flat">
+                                        <input id="password" :type="passwordType" v-model="form.password"
+                                               class="form-control"
+                                               :class="{ 'is-invalid': errors.password }">
+                                        <span class="input-group-text"
+                                              :class="{ 'border-red': errors.password }">
+                                            <a class="link-secondary" @click="togglePassword">
+                                                <i :class="passwordClass"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        {{ __('messages.leave_empty_to_keep_the_same') }}
+                                    </small>
+                                    <div class="invalid-feedback d-block" v-if="errors.password">
+                                        @{{ errors.password[0] }}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label required">
+                                        {{ __('messages.password_confirmation') }}
+                                    </label>
+                                    <div class="input-group input-group-flat">
+                                        <input id="password_confirmation" :type="passwordConfirmationType"
+                                               v-model="form.password_confirmation" class="form-control"
+                                               :class="{ 'is-invalid': errors.password_confirmation }">
+                                        <span class="input-group-text"
+                                              :class="{ 'border-red': errors.password_confirmation }">
+                                            <a class="link-secondary" @click="togglePasswordConfirmation">
+                                                <i :class="passwordConfirmationClass"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="invalid-feedback d-block" v-if="errors.password_confirmation">
+                                        @{{ errors.password_confirmation[0] }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mt-0 mt-0 mt-xl-0 mt-lg-0 mt-md-3 mt-sm-3">
-                        <div class="card">
-                            <div class="card-body p-4 text-center">
-                                <span class="avatar avatar-xl mb-3"
-                                      style="background-image: url({{ $user->avatar ? asset($user->avatar) : Avatar::create($user->name)->toBase64() }})"></span>
-                                <h3 class="m-0 mb-1">{{ $user->name }}</h3>
-                                <div class="mt-3">
-                                    <span
-                                        class="badge bg-purple-lt">{{ $user->roles->isNotEmpty() ? 'Role: ' . $user->getRoleDisplayNames()->implode(',') : 'No Role' }}</span>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="form-group mx-3 mb-4">
-                                    <input type="file" class="form-control @error('avatar') is-invalid @enderror"
-                                           name="avatar"/>
-
-                                    @error('avatar')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+                    <div class="card-footer bg-transparent mt-auto">
+                        <div class="btn-list">
+                            <button type="submit" class="btn btn-primary" :disabled="loading">
+                                <span class="spinner-border spinner-border-sm border-2 me-2" role="status"
+                                      aria-hidden="true" v-if="loading"></span>
+                                <span>{{ __('Save') }}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -119,3 +157,15 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        window.model = {{ Js::from($model) }};
+        window.currentRoles = {{ Js::from($currentRoles) }};
+        window.roles = {{ Js::from($roles) }};
+        window.avatarTypes = {{ Js::from(User::avatarTypes()) }};
+        window.avatarPreview = "{{ $model->getAvatarPath() }}";
+        window.verifyTypes = {{ Js::from(User::verifyTypes()) }};
+    </script>
+    @vite('resources/js/views/users/edit.js')
+@endpush

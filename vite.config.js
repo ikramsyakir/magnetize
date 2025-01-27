@@ -21,6 +21,7 @@ export default defineConfig({
                 'resources/js/views/roles/create.js',
                 'resources/js/views/roles/edit.js',
                 'resources/js/views/users/create.js',
+                'resources/js/views/users/edit.js',
             ],
             refresh: true,
         }),

@@ -91,4 +91,6 @@ return [
     'add_user_desc' => 'Tambah pengguna baharu ke dalam sistem dengan mudah',
     'edit_user_desc' => 'Kemaskini butiran pengguna dengan cepat dan berkesan',
     'leave_empty_to_keep_the_same' => 'Biarkan kosong untuk kekal sama',
+    'post_list' => 'Senarai Pos',
+    'create_post' => 'Cipta Pos',
 ];

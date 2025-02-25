@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboards;
 
+use App\Http\Controllers\Controller;
 use App\Models\Posts\Post;
 use App\Models\Roles\Role;
 use App\Models\Users\User;

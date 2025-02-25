@@ -1,5 +1,3 @@
-import Swal from "sweetalert2";
-
 import _ from "lodash";
 window._ = _;
 

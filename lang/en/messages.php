@@ -91,4 +91,6 @@ return [
     'add_user_desc' => 'Easily add a new user to the system',
     'edit_user_desc' => 'Update user details quickly and efficiently',
     'leave_empty_to_keep_the_same' => 'Leave empty to keep the same',
+    'post_list' => 'Post List',
+    'create_post' => 'Create Post',
 ];

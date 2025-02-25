@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Permissions;
 
+use App\Http\Controllers\Controller;
 use App\Models\Permissions\Permission;
 use Illuminate\View\View;
 

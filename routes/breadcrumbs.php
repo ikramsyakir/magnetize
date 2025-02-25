@@ -90,14 +90,14 @@ Breadcrumbs::for('users.edit', function ($trail, User $user) {
 });
 
 // Dashboard / Posts
-Breadcrumbs::for('posts', function ($trail) {
+Breadcrumbs::for('posts.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Posts', route('posts.index'));
+    $trail->push(__('messages.posts'), route('posts.index'));
 });
 
 // Dashboard / Posts / Create
-Breadcrumbs::for('new_post', function ($trail) {
-    $trail->parent('posts');
+Breadcrumbs::for('posts.create', function ($trail) {
+    $trail->parent('posts.index');
     $trail->push('New Post', route('posts.create'));
 });
 

@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Dashboards\DashboardController;
+use App\Http\Controllers\Permissions\PermissionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Profiles\ProfileController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Themes\ThemeController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*

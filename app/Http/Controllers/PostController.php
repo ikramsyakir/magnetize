@@ -4,46 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePost;
 use App\Http\Requests\UpdatePost;
-use App\Models\Post;
+use App\Models\Posts\Post;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Throwable;
 
 class PostController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('permission:create-post')->only('create', 'store');
-        $this->middleware('permission:read-post')->only('index', 'show');
-        $this->middleware('permission:update-post')->only('edit', 'update');
-        $this->middleware('permission:delete-post')->only('destroy');
+        $this->middleware('permission:browse-posts')->only('index');
+        $this->middleware('permission:read-posts')->only('show');
+        $this->middleware('permission:edit-posts')->only('edit', 'update');
+        $this->middleware('permission:add-posts')->only('create', 'store');
+        $this->middleware('permission:delete-posts')->only('destroy');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(): View
     {
-        $posts = Post::with('user')->filter($request->all())->sortable()->paginate($request->get('limit') ?? config('app.per_page'));
-
-        return view('posts.index', compact('posts'));
+        return view('posts.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): View
     {
         return view('posts.create');
     }

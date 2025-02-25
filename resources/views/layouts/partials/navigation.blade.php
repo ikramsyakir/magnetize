@@ -23,12 +23,12 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     @can('profile')
                         <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                            {{ __('messages.profile') }}
+                            <i class="ti ti-user-circle me-2"></i>{{ __('messages.profile') }}
                         </a>
                     @endcan
                     <a class="dropdown-item" href="{{ route('logout') }}"
                        onclick="event.preventDefault();document.getElementById('nav-logout-form').submit();">
-                        {{ __('Logout') }}
+                        <i class="ti ti-logout-2 me-2"></i>{{ __('Logout') }}
                     </a>
 
                     <form id="nav-logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

@@ -14,14 +14,16 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ __('messages.user_list') }}</h3>
                         <div class="card-actions">
-                            <a href="{{ route('users.create') }}" class="btn btn-primary">
-                                <i class="ti ti-plus me-2"></i>
-                                {{ __('messages.create_user') }}
-                            </a>
+                            @can('add-users')
+                                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                                    <i class="ti ti-plus me-2"></i>
+                                    {{ __('messages.create_user') }}
+                                </a>
+                            @endcan
                         </div>
                     </div>
 
-                    <livewire:users.user-table />
+                    <livewire:users.user-table/>
                 </div>
             </div>
         </div>

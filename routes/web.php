@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// test workflow
+// test commit
 
 Route::get('/', function () {
     return redirect()->route('login');

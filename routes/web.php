@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// test commit
+// test commit 1
 
 Route::get('/', function () {
     return redirect()->route('login');

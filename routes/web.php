@@ -21,8 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// update comment
-
+// Redirect to login page
 Route::get('/', function () {
     return redirect()->route('login');
 });
